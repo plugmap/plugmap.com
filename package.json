@@ -1,0 +1,25 @@
+{
+  "name": "plugmap.com",
+  "version": "0.0.0",
+  "description": "A site for finding power outlets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stuartpb/plugmap.com.git"
+  },
+  "author": "Stuart P. Bentley",
+  "license": "BSD",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "express": "~3.2.2",
+    "mongodb": "~1.3.0",
+    "jade": "~0.30.0",
+    "knox": "~0.8.0"
+  }
+}
