@@ -5,13 +5,18 @@ var db;
 var app = express();
 var api = express();
 
-api.get('/nearest',function(req,res){
+api.get('/plugs/near',function(req,res){
   res.send(db.plugs.find( { loc : { $near :
    { $geometry :
        { type : "Point" ,
          coordinates: [ req.param('lng'), req.param('lat') ] } },
      $maxDistance : req.param('radius')
     } } ).toArray());
+});
+
+//NOTE: This path should be deprecated when there are a sizable number of plugs
+api.get('/plugs',function(req,res){
+  res.send(db.plugs.find({},{limit:200}).toArray());
 });
 
 app.use(express.static('www'));

@@ -1,4 +1,4 @@
-/*global L*/
+/*global L Modernizr*/
 
 "use strict";
 
@@ -9,7 +9,7 @@ var map = L.mapbox.map('map', 'stuartpb.map-6cgn20kd')
   .setView([47.61118157075462, -122.33769352761296], 16);
   
 function plugInfo(plug){
-  return '<h2 class="venuename">' + plug.venue + '</h2>'
+  return '<h2 class="venuename">' + plug.venue + '</h2>';
 }
   
 function addPlugMarker(plug){
@@ -22,43 +22,53 @@ function getPlugs(cb) {
   //pretend API call
   return cb(null, [
     {
-      latlng: [47.616722, -122.3461743],
+      latlng: [47.6167248819164, -122.34617471694942],
       venue: "Uptown Espresso",
-      outlets: 2
+      sockets: 2
     },  
     {
-      latlng: [47.616727, -122.3461741],
+      latlng: [47.6167248819165, -122.34617471694945],
       venue: "Uptown Espresso",
-      outlets: 2
+      sockets: 2
     },  
     {
-      latlng: [47.616723, -122.3461749],
+      latlng: [47.6167248819166, -122.34617471694944],
       venue: "Uptown Espresso",
-      outlets: 2
+      sockets: 2
     },  
     {
-      latlng: [47.616728, -122.3461745],
+      latlng: [47.6167248819167, -122.34617471694943],
       venue: "Uptown Espresso",
-      outlets: 2
+      sockets: 2
     },  
     {
-      latlng: [47.616721, -122.3461743],
+      latlng: [47.6167248819168, -122.34617471694946],
       venue: "Uptown Espresso",
-      outlets: 2
+      sockets: 2
     },  
     {
       latlng: [47.61629637427943, -122.34523057937622],
       venue: "Starbucks",
-      outlets: 2
+      sockets: 2
     }
   ]);
 }
 
 var markers = new L.MarkerClusterGroup({
-  iconCreateFunction: function(cluster) {
-    return new L.DivIcon({ className: 'plug-cluster', iconSize: L.point(29,25),
-      html: '<span class="count">' + cluster.getChildCount() + '</span>' });
-  }
+    spiderfyOnMaxZoom: true,
+    
+    // For some reason I don't understand, that doesn't occur in the example
+    // cases for this plugin, leaving this unset results in clustering being
+    // disabled at the lowest zoom level.
+    // Worth investigating, later.
+    disableClusteringAtZoom: 20,
+    
+    spiderfyDistanceMultiplier: 1.5,
+    
+    iconCreateFunction: function(cluster) {
+        return new L.DivIcon({ className: 'plug-cluster', iconSize: L.point(29,25),
+          html: '<span class="count">' + cluster.getChildCount() + '</span>' });
+    }
 });
 
 getPlugs(function(err,plugs){
@@ -69,6 +79,23 @@ getPlugs(function(err,plugs){
   });
   map.addLayer(markers);
 });
+
+function locationlessLocator() {
+  
+}
+
+function positionalLocator(position) {
+  
+}
+
+function locateMe() {
+  if(Modernizr.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      positionalLocator,locationlessLocator);
+  } else {
+    locationlessLocator();
+  }
+}
 
 function gimmeCoords(){
 map.on('click',function(evt){
