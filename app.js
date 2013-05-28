@@ -78,7 +78,9 @@ module.exports = function(db) {
     '$2a$10$00000000000000000000000000000000000000000000000000000';
 
   app.get('/login', function(req,res){
-    res.render('login.jade',{csrfToken: req.session._csrf});
+    res.render('login.jade',{
+      username: req.session.username,
+      csrfToken: req.session._csrf});
   });
   app.post('/login', function(req,res,next) {
     //NOTE: this should be brute-force-proofed
@@ -96,13 +98,17 @@ module.exports = function(db) {
             res.redirect('/');
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
-            res.render('login.jade',{failure:'Invalid username or password.'});
+            res.render('login.jade',{
+              username: req.session.username,
+              failure:'Invalid username or password.'});
           }
       });
     });
   }); // POST /register
   app.get('/register', function(req,res){
-    res.render('register-request.jade',{csrfToken: req.session._csrf});
+    res.render('register-request.jade',{
+      username: req.session.username,
+      csrfToken: req.session._csrf});
   });
   app.post('/register', function(req,res,next) {
     //TODO: validate email address
@@ -133,7 +139,8 @@ module.exports = function(db) {
               else next(mailError);
             });
           } else {
-            res.render('register-inform.jade');
+            res.render('register-inform.jade',{
+              username: req.session.username});
           }
         }); //sendMail
       }); //tokens.insert
@@ -144,9 +151,16 @@ module.exports = function(db) {
       function(err,tokenDoc){
         if (err) return next(err);
         if (tokenDoc) {
-          res.render('register-request.jade',{csrfToken: req.session._csrf});
+          res.render('register-request.jade',{
+            username: req.session.username,
+            csrfToken: req.session._csrf});
         } else {
-          res.render(404,'bad-token.jade');
+          res.render('bad-token.jade',{
+            username: req.session.username
+            },function(err,html){
+            if (err) return next(err);
+            res.send(404,html);
+          });
         }
       }); //tokens.findOne
   });
@@ -183,7 +197,9 @@ module.exports = function(db) {
           // NOTE: Bad POSTs should probably get a different error
           // (something that doesn't suggest that the URL might have been
           // entered wrong)
-          res.render('bad-token.jade',function(err,html){
+          res.render('bad-token.jade',{
+            username: req.session.username
+            },function(err,html){
             if (err) return next(err);
             res.send(404,html);
           });
@@ -194,9 +210,13 @@ module.exports = function(db) {
     plugs.findOne({ id: req.params.id }, function(err, plug){
       if(err) return next(err);
       if(plug) {
-        res.render('plug.jade', {plug:plug});
+        res.render('plug.jade', {
+          username: req.session.username,
+          plug:plug});
       } else {
-        res.render('no-plug.jade', {plug:plug}, function(err,html){
+        res.render('no-plug.jade', {
+          username: req.session.username,
+          plug:plug}, function(err,html){
           if (err) return next(err);
           res.send(404,html);
         });
@@ -204,8 +224,14 @@ module.exports = function(db) {
     });
   });
   app.get('/submit', function(req,res){
-    if(req.session.username){
-    res.render('login.jade',{csrfToken: req.session._csrf});
+    if (req.session.username) {
+    res.render('submit.jade',{
+      username: req.session.username,
+      csrfToken: req.session._csrf});
+    } else {
+      //NOTE: this should have a query flag denoting it should say
+      //"you must be signed in to submit plugs"
+      res.redirect('/login');
     }
   });
   app.post('/submit', function(req,res,next){
@@ -215,7 +241,7 @@ module.exports = function(db) {
     } else {
       //TODO: render "Your session appears to have timed out or something"
     }
-    res.render('stub.jade');
+    res.render('stub.jade',{username: req.session.username});
   });
   app.post('/login', function(req,res,next) {
     //NOTE: this should be brute-force-proofed
@@ -233,7 +259,9 @@ module.exports = function(db) {
             res.redirect('/');
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
-            res.render('login.jade',{failure:'Invalid username or password.'});
+            res.render('login.jade',{
+              username: req.session.username,
+              failure:'Invalid username or password.'});
           }
       });
     });
