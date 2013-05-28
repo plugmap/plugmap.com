@@ -262,6 +262,7 @@ module.exports = function(db) {
             //NOTE: Responding to the post with a non-redirect isn't too cool
             res.render('login.jade',{
               username: req.session.username,
+              csrfToken: req.session._csrf,
               failure:'Invalid username or password.'});
           }
       });
