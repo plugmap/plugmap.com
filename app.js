@@ -3,10 +3,8 @@ var crypto = require('crypto');
 var bcrypt = require('bcrypt');
 var MongoStore = require('connect-mongo')(express);
 var nodemailer = require('nodemailer');
-var smtpConfig = require("envigor")().smtp;
-delete smtpConfig.service;
 var smtpTransport = nodemailer.createTransport(
-  "SMTP", smtpConfig);
+  "SMTP", require("envigor")().smtp);
 
 function randomEmailToken(cb) {
   return crypto.randomBytes(48, function(err, buf) {
