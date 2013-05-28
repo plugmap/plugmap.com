@@ -2,14 +2,14 @@ extends layout
 
 append styles
   link(href='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.css',rel='stylesheet')
-  link(href='MarkerCluster.css',rel='stylesheet')
+  link(href='/MarkerCluster.css',rel='stylesheet')
   //if lte IE 8
     link(href='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.ie.css',rel='stylesheet')
 
 append scripts
   script(src='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.js')
-  script(src='leaflet.markercluster.js')
+  script(src='/leaflet.markercluster.js')
 
 block content
   #map
-  script(src='plugmap.js')
+  script(src='/plugmap.js')
