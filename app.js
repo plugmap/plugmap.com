@@ -118,7 +118,7 @@ module.exports = function(db) {
       if (err) return next(err);
       //TODO: set tokens to expire
       tokens.insert({_id:token, type:'register',
-        email: res.body.email.toLowerCase()},
+        email: req.body.email.toLowerCase()},
       function(err,written){
         if (err) return next(err);
         smtpTransport.sendMail({
