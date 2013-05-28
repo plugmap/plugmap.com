@@ -64,14 +64,15 @@ module.exports = function(db) {
     secret: process.env.SESSION_SECRET,
     store: new MongoStore({db:db})}));
 
+
   app.get('/', function(req,res) {
     res.render('index.jade', {username: req.session.username});
   });
 
-  app.use(express.bodyParser());
-
   app.use('/api/v0',api(db));
 
+  app.use(express.urlencoded());
+  app.use(express.multipart());
   app.use(express.csrf());
 
   var impossibleHash =
@@ -112,7 +113,6 @@ module.exports = function(db) {
   });
   app.post('/register', function(req, res, next) {
     //TODO: validate email address
-    console.log(req);
     var email = req.body.email.toLowerCase();
     //TODO: check email address hasn't already registered (or made too many
     // requests for this email)
