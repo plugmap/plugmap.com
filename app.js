@@ -64,16 +64,15 @@ module.exports = function(db) {
     secret: process.env.SESSION_SECRET,
     store: new MongoStore({db:db})}));
 
+  app.use(express.urlencoded());
+  app.use(express.multipart());
+  app.use(express.csrf());
 
   app.get('/', function(req,res) {
     res.render('index.jade', {username: req.session.username});
   });
 
   app.use('/api/v0',api(db));
-
-  app.use(express.urlencoded());
-  app.use(express.multipart());
-  app.use(express.csrf());
 
   var impossibleHash =
     '$2a$10$00000000000000000000000000000000000000000000000000000';
