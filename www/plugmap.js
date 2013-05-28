@@ -22,34 +22,70 @@ function getPlugs(cb) {
   //pretend API call
   return cb(null, [
     {
-      latlng: [47.6167248819164, -122.34617471694942],
-      venue: "Uptown Espresso",
-      sockets: 2
-    },  
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [-122.34617471694942, 47.6167248819164]
+      },
+      properties: {
+        venue: "Uptown Espresso",
+        sockets: 2
+      }
+    },
     {
-      latlng: [47.6167248819165, -122.34617471694945],
-      venue: "Uptown Espresso",
-      sockets: 2
-    },  
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [-122.34617471694942, 47.6167248819164]
+      },
+      properties: {
+        venue: "Uptown Espresso",
+        sockets: 2
+      }
+    },
     {
-      latlng: [47.6167248819166, -122.34617471694944],
-      venue: "Uptown Espresso",
-      sockets: 2
-    },  
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [-122.34617471694942, 47.6167248819164]
+      },
+      properties: {
+        venue: "Uptown Espresso",
+        sockets: 2
+      }
+    },
     {
-      latlng: [47.6167248819167, -122.34617471694943],
-      venue: "Uptown Espresso",
-      sockets: 2
-    },  
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [-122.34617471694942, 47.6167248819164]
+      },
+      properties: {
+        venue: "Uptown Espresso",
+        sockets: 2
+      }
+    },
     {
-      latlng: [47.6167248819168, -122.34617471694946],
-      venue: "Uptown Espresso",
-      sockets: 2
-    },  
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [-122.34617471694942, 47.6167248819164]
+      },
+      properties: {
+        venue: "Uptown Espresso",
+        sockets: 2
+      }
+    },
     {
-      latlng: [47.61629637427943, -122.34523057937622],
-      venue: "Starbucks",
-      sockets: 2
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [-122.34523057937622, 47.61629637427943]
+      },
+      properties: {
+        venue: "Starbucks",
+        sockets: 2
+      }
     }
   ]);
 }
@@ -73,8 +109,8 @@ var markers = new L.MarkerClusterGroup({
 
 getPlugs(function(err,plugs){
   plugs.forEach(function (plug){
-    var marker = L.marker(plug.latlng,{icon:plugicon});
-    marker.bindPopup(plug.venue);
+    var marker = L.marker([plug.geometry.coordinates[1],plug.geometry.coordinates[0]],{icon:plugicon});
+    marker.bindPopup(plug.properties.venue);
     markers.addLayer(marker);
   });
   map.addLayer(markers);
