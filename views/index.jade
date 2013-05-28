@@ -14,6 +14,11 @@ html
   body
     header
       h1 PlugMap
-      a.button.green#login-button Log in
+      .headpanel
+        if username
+
+          a(href='/submit').button.green Add a plug
+        else
+          a(href='/login').button.green Log in
     #map
     script(src='plugmap.js')

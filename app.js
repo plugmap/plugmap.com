@@ -201,6 +201,41 @@ return function(db) {
       }
     });
   });
+  app.get('/submit', function(req,res){
+    if(req.session.username){
+    res.render('login.jade',{csrfToken: req.session._csrf});
+    }
+  });
+  app.post('/submit', function(req,res,next){
+    if(req.session.username) {
+      //TODO: insert plug (heyo!)
+      //TODO: redirect to plug
+    } else {
+      //TODO: render "Your session appears to have timed out or something"
+    }
+    res.render('stub.jade');
+  });
+  app.post('/login', function(req,res,next) {
+    //NOTE: this should be brute-force-proofed
+    users.findOne({$or:[{unLower: req.body.username.toLowerCase()},
+      {email: req.body.username.toLowerCase()}]},
+      function(err, user) {
+
+      if (err) return next(err);
+      // Compare against an impossible hash if no user for timing reasons.
+      bcrypt.compare(req.body.password,
+        user ? user.passhash : impossibleHash, function(err, hashMatch) {
+          if (err) return next(err);
+          if (hashMatch) {
+            req.session.user = user.username;
+            res.redirect('/');
+          } else {
+            //NOTE: Responding to the post with a non-redirect isn't too cool
+            res.render('login.jade',{failure:'Invalid username or password.'});
+          }
+      });
+    });
+  }); // POST /register
 
   return app;
 };

@@ -1,0 +1,25 @@
+!!!
+html
+  head
+    title PlugMap
+    link(href='plugmap.css',rel='stylesheet')
+    link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
+    link(href='favicon.png',rel='icon')
+  body
+    header
+      h1 PlugMap
+      a.button.green#login-button Register
+    main
+      form(method='post')
+        input(type='hidden',name='_csrf',value=csrfToken)
+        p Longitude:
+        input(type='number',name='longitude')
+        p Latitude:
+        input(type='number',name='latitude')
+        p Venue:
+        input(type='text',name='venue')
+        p Name:
+        input(type='text',name='name')
+        p Number of sockets:
+        input(type='number',name='sockets')
+        input(type='submit')

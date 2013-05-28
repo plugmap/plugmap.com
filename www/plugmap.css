@@ -76,7 +76,7 @@ body { margin:0; padding:0; font-family: sans-serif;}
   color: #ffffff;
   background-color: #51a351;
 }
-#login-button {
+.headpanel {
   position:absolute; right: 0.5rem; top:0.5rem;
 }
 header {position: absolute; top: 0; height: 3rem; width: 100%;
