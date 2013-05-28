@@ -48,7 +48,7 @@ function api(db){
   return apiapp;
 }
 
-return function(db) {
+module.exports = function(db) {
   var plugs = db.collection('plugs');
   var tokens = db.collection('tokens');
   var users = db.collection('users');
