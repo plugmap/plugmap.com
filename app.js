@@ -3,7 +3,7 @@ var crypto = require('crypto');
 var bcrypt = require('bcrypt');
 var MongoStore = require('connect-mongo')(express);
 var nodemailer = require('nodemailer');
-var smtpConfig = require("envigor").smtp;
+var smtpConfig = require("envigor")().smtp;
 delete smtpConfig.service;
 var smtpTransport = nodemailer.createTransport(
   "SMTP", smtpConfig);
