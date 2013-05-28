@@ -60,7 +60,9 @@ module.exports = function(db) {
   app.use(express.static('www'));
 
   app.use(express.cookieParser());
-  app.use(express.session({store: new MongoStore({db:db})}));
+  app.use(express.session({
+    secret: process.env.SESSION_SECRET,
+    store: new MongoStore({db:db})}));
 
   app.get('/', function(req,res) {
     res.render('index.jade', {username: req.session.username});
