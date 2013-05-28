@@ -94,7 +94,7 @@ module.exports = function(db) {
         user ? user.passhash : impossibleHash, function(err, hashMatch) {
           if (err) return next(err);
           if (hashMatch) {
-            req.session.user = user.username;
+            req.session.username = user.username;
             res.redirect('/');
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
