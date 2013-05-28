@@ -187,7 +187,7 @@ module.exports = function(db) {
                   if (err) return next(err);
                   if (req.body.authenticate) {
                     //NOTE: This might be better using the user document ID
-                    req.session.user = req.body.username;
+                    req.session.username = req.body.username;
                   }
                   res.redirect('/');
                 }); //users.insert
@@ -256,7 +256,7 @@ module.exports = function(db) {
         user ? user.passhash : impossibleHash, function(err, hashMatch) {
           if (err) return next(err);
           if (hashMatch) {
-            req.session.user = user.username;
+            req.session.username = user.username;
             res.redirect('/');
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
