@@ -15,10 +15,10 @@ block main
     input(type='submit')
   script.
     var pwInput = document.getElementById('password')
-    var pw2input = document.getElementById('password2')
+    var pw2Input = document.getElementById('password2')
     var pWarn = document.getElementById('passwarn')
     function checkAndWarn(){
-      if (pwInput.value == pwInput2.value) {
+      if (pwInput.value == pw2Input.value) {
         pWarn.textContent = 'Passwords match';
         pWarn.style.backgroundColor = '#afa';
       } else {
