@@ -1,39 +1,30 @@
-!!!
-html
-  head
-    title PlugMap
-    link(href='plugmap.css',rel='stylesheet')
-    link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
-    link(href='favicon.png',rel='icon')
-  body
-    header
-      h1 PlugMap
-      a.button.green#login-button Log in
-    main
-      form(method='post')
-        input(type='hidden',name='_csrf',value=csrfToken)
-        p Enter your desired username:
-        input(type='text',name='username')
-        p Enter your desired password:
-        input#password(type='password',name='password')
-        input#password2(type='password')
-        p#passwarn
-        label
-          input(type="checkbox",name="authenticate",checked)
-          | Log into my new account when I submit this form
-        input(type='submit')
-      script.
-        var pwInput = document.getElementById('password')
-        var pw2input = document.getElementById('password2')
-        var pWarn = document.getElementById('passwarn')
-        function checkAndWarn(){
-          if (pwInput.value == pwInput2.value) {
-            pWarn.textContent = 'Passwords match';
-            pWarn.style.backgroundColor = '#afa';
-          } else {
-            pWarn.textContent = 'Passwords do not match';
-            pWarn.style.backgroundColor = '#faa';
-          }
-        }
-        pwInput.addEventListener('keydown', checkAndWarn);
-        pw2Input.addEventListener('keydown', checkAndWarn);
+extends layout
+
+block main
+  form(method='post')
+    input(type='hidden',name='_csrf',value=csrfToken)
+    p Enter your desired username:
+    input(type='text',name='username')
+    p Enter your desired password:
+    input#password(type='password',name='password')
+    input#password2(type='password')
+    p#passwarn
+    label
+      input(type="checkbox",name="authenticate",checked)
+      | Log into my new account when I submit this form
+    input(type='submit')
+  script.
+    var pwInput = document.getElementById('password')
+    var pw2input = document.getElementById('password2')
+    var pWarn = document.getElementById('passwarn')
+    function checkAndWarn(){
+      if (pwInput.value == pwInput2.value) {
+        pWarn.textContent = 'Passwords match';
+        pWarn.style.backgroundColor = '#afa';
+      } else {
+        pWarn.textContent = 'Passwords do not match';
+        pWarn.style.backgroundColor = '#faa';
+      }
+    }
+    pwInput.addEventListener('keydown', checkAndWarn);
+    pw2Input.addEventListener('keydown', checkAndWarn);

@@ -1,17 +1,8 @@
-!!!
-html
-  head
-    title PlugMap
-    link(href='plugmap.css',rel='stylesheet')
-    link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
-    link(href='favicon.png',rel='icon')
-  body
-    header
-      h1 PlugMap
-      a.button.green#login-button Log in
-    main
-      h2 Token not found
-      ul
-        li Did you copy the link correctly?
-        li Did you already visit this link?
-        li Has the link expired?
+extends layout
+
+block main
+  h2 Token not found
+  ul
+    li Did you copy the link correctly?
+    li Did you already visit this link?
+    li Has the link expired?

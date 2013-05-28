@@ -1,0 +1,22 @@
+!!!
+html
+  head
+    block head
+      title PlugMap
+      block styles
+        link(href='plugmap.css',rel='stylesheet')
+        link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
+      block scripts
+      link(href='favicon.png',rel='icon')
+  body
+    header
+      h1 PlugMap
+      .headpanel
+        block headpanel
+          if username
+            a(href='/submit').button.green Add a plug
+          else
+            a(href='/login').button.green Log in
+    block content
+      main
+        block main

@@ -1,19 +1,13 @@
-!!!
-html
-  head
-    title PlugMap
-    link(href='plugmap.css',rel='stylesheet')
-    link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
-    link(href='favicon.png',rel='icon')
-  body
-    header
-      h1 PlugMap
-      a.button.green#login-button Register
-    main
-      form(method='post')
-        input(type='hidden',name='_csrf',value=csrfToken)
-        p Username / Email:
-        input(type='text',name='username')
-        p Password:
-        input(type='password',name='password')
-        input(type='submit')
+extends layout
+
+block headpanel
+  a(href='/register').button.green Register
+
+block main
+  form(method='post')
+    input(type='hidden',name='_csrf',value=csrfToken)
+    p Username / Email:
+    input(type='text',name='username')
+    p Password:
+    input(type='password',name='password')
+    input(type='submit')
