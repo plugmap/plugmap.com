@@ -152,7 +152,7 @@ module.exports = function(db) {
       function(err,tokenDoc){
         if (err) return next(err);
         if (tokenDoc) {
-          res.render('register-request.jade',{
+          res.render('register-finalize.jade',{
             username: req.session.username,
             csrfToken: req.session._csrf});
         } else {
