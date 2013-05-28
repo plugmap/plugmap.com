@@ -105,24 +105,26 @@ module.exports = function(db) {
       });
     });
   }); // POST /register
-  app.get('/register', function(req,res){
+  app.get('/register', function(req, res){
     res.render('register-request.jade',{
       username: req.session.username,
       csrfToken: req.session._csrf});
   });
-  app.post('/register', function(req,res,next) {
+  app.post('/register', function(req, res, next) {
     //TODO: validate email address
+    console.log(req);
+    var email = req.body.email.toLowerCase();
     //TODO: check email address hasn't already registered (or made too many
     // requests for this email)
-    randomEmailToken(function(err,token){
+    randomEmailToken(function(err, token){
       if (err) return next(err);
       //TODO: set tokens to expire
       tokens.insert({_id:token, type:'register',
-        email: req.body.email.toLowerCase()},
-      function(err,written){
+        email: email},
+      function(err, written){
         if (err) return next(err);
         smtpTransport.sendMail({
-          to: res.body.email,
+          to: email,
           from: 'tokens@plugmap.com',
           subject: 'PlugMap user registration link',
           text: 'To register an account on plugmap.com with this email '
