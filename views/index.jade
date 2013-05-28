@@ -1,0 +1,19 @@
+!!!
+html
+  head
+    title PlugMap
+    link(href='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.css',rel='stylesheet')
+    link(href='plugmap.css',rel='stylesheet')
+    link(href='MarkerCluster.css',rel='stylesheet')
+    link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
+    link(href='favicon.png',rel='icon')
+    //if lte IE 8
+      link(href='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.ie.css',rel='stylesheet')
+    script(src='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.js')
+    script(src='leaflet.markercluster.js')
+  body
+    header
+      h1 PlugMap
+      a.button.green#login-button Log in
+    #map
+    script(src='plugmap.js')

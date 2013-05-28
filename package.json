@@ -24,6 +24,7 @@
     "bcrypt": "~0.7.5",
     "passport": "~0.1.17",
     "passport-facebook": "~0.1.5",
-    "connect-mongo": "~0.3.2"
+    "connect-mongo": "~0.3.2",
+    "envigor": "~0.3.0"
   }
 }

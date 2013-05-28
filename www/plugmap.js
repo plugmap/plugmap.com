@@ -7,11 +7,11 @@ var plugicon = L.icon({iconUrl:'happy-plug-icon.svg',
 
 var map = L.mapbox.map('map', 'stuartpb.map-6cgn20kd')
   .setView([47.61118157075462, -122.33769352761296], 16);
-  
+
 function plugInfo(plug){
   return '<h2 class="venuename">' + plug.venue + '</h2>';
 }
-  
+
 function addPlugMarker(plug){
   var mrkr = L.marker(plug.latlng,{icon:plugicon});
   mrkr.bindPopup(plugInfo(plug));
@@ -80,7 +80,7 @@ function getPlugs(cb) {
       type: "Feature",
       geometry: {
         type: "Point",
-        coordinates: [-122.34523057937622, 47.61629637427943]
+        coordinates: [-122.34439909458159, 47.616864100941655]
       },
       properties: {
         venue: "Starbucks",
@@ -92,15 +92,15 @@ function getPlugs(cb) {
 
 var markers = new L.MarkerClusterGroup({
     spiderfyOnMaxZoom: true,
-    
+
     // For some reason I don't understand, that doesn't occur in the example
     // cases for this plugin, leaving this unset results in clustering being
     // disabled at the lowest zoom level.
     // Worth investigating, later.
     disableClusteringAtZoom: 20,
-    
+
     spiderfyDistanceMultiplier: 1.5,
-    
+
     iconCreateFunction: function(cluster) {
         return new L.DivIcon({ className: 'plug-cluster', iconSize: L.point(29,25),
           html: '<span class="count">' + cluster.getChildCount() + '</span>' });
@@ -117,11 +117,11 @@ getPlugs(function(err,plugs){
 });
 
 function locationlessLocator() {
-  
+
 }
 
 function positionalLocator(position) {
-  
+
 }
 
 function locateMe() {

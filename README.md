@@ -5,14 +5,10 @@ A site for finding power outlets.
 
 ## Config variables
 
-- S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET_NAME, S3_ENDPOINT
+In addition to the envigor configurations for mongodb, s3, smtp, and facebook:
+
 - MAPBOX_TILES: The ID of the tiles used by MapBox (passed to the JS API constructor).
-- FACEBOOK_APP_ID, FACEBOOK_SECRET
 - BCRYPT_ROUNDS: Rounds to generate bcrypt hashes with (defaults to 10).
-- MONGODB_URL || MONGOLAB_URI || MONGOHQ_URL
-- SMTP_USERNAME || MANDRILL_USERNAME || POSTMARK_API_KEY || SENDGRID_USERNAME || MAILGUN_SMTP_LOGIN
-- SMTP_PASSWORD || MANDRILL_APIKEY || POSTMARK_API_KEY || SENDGRID_PASSWORD || MAILGUN_SMTP_PASSWORD
-- SMTP_HOST, SMTP_PORT (if none of the above service credentials are defined)
 - EMAIL_TOKEN_SENDER: Address for account emails to come from.
 
 ## Setup

@@ -1,0 +1,18 @@
+!!!
+html
+  head
+    title PlugMap
+    link(href='plugmap.css',rel='stylesheet')
+    link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
+    link(href='favicon.png',rel='icon')
+  body
+    header
+      h1 PlugMap
+      a.button.green#login-button Log in
+    main
+      p Enter your email address:
+      form(method='post')
+        input(type='hidden',name='_csrf',value=csrfToken)
+        input(type='email',name='email')
+        input(type='submit')
+      p You will be e-mailed with a link to create your account.
