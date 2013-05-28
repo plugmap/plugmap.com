@@ -25,6 +25,7 @@
     "passport": "~0.1.17",
     "passport-facebook": "~0.1.5",
     "connect-mongo": "~0.3.2",
-    "envigor": "~0.3.0"
+    "envigor": "~0.3.0",
+    "nodemailer": "~0.4.4"
   }
 }
