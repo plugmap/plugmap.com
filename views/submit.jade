@@ -9,9 +9,9 @@ append scripts
   script(src='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.js')
 
 block main
+  #dropmap
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
-    #dropmap
     p Longitude:
     input(type='number',name='longitude')#pluglong
     p Latitude:
