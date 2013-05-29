@@ -3,8 +3,11 @@ var crypto = require('crypto');
 var bcrypt = require('bcrypt');
 var MongoStore = require('connect-mongo')(express);
 var nodemailer = require('nodemailer');
+var knox = require('knox');
+var cfg = require("envigor")();
 var smtpTransport = nodemailer.createTransport(
-  "SMTP", require("envigor")().smtp);
+  "SMTP", cfg.smtp);
+var s3client = knox.createClient(cfg.s3);
 
 function randomEmailToken(cb) {
   return crypto.randomBytes(48, function(err, buf) {
@@ -100,11 +103,12 @@ module.exports = function(db) {
             //NOTE: Responding to the post with a non-redirect isn't too cool
             res.render('login.jade',{
               username: req.session.username,
+              csrfToken: req.session._csrf,
               failure:'Invalid username or password.'});
           }
       });
     });
-  }); // POST /register
+  }); // POST /login
   app.get('/register', function(req, res){
     res.render('register-request.jade',{
       username: req.session.username,
@@ -244,30 +248,6 @@ module.exports = function(db) {
     }
     res.render('stub.jade',{username: req.session.username});
   });
-  app.post('/login', function(req,res,next) {
-    //NOTE: this should be brute-force-proofed
-    users.findOne({$or:[{unLower: req.body.username.toLowerCase()},
-      {email: req.body.username.toLowerCase()}]},
-      function(err, user) {
-
-      if (err) return next(err);
-      // Compare against an impossible hash if no user for timing reasons.
-      bcrypt.compare(req.body.password,
-        user ? user.passhash : impossibleHash, function(err, hashMatch) {
-          if (err) return next(err);
-          if (hashMatch) {
-            req.session.username = user.username;
-            res.redirect('/');
-          } else {
-            //NOTE: Responding to the post with a non-redirect isn't too cool
-            res.render('login.jade',{
-              username: req.session.username,
-              csrfToken: req.session._csrf,
-              failure:'Invalid username or password.'});
-          }
-      });
-    });
-  }); // POST /register
 
   return app;
 };

@@ -126,3 +126,4 @@ h1 a {
   text-align: center;
 }
 main {display: block;}
+.reportFailure{background-color: #ffa; text-align: center;}

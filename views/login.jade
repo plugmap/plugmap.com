@@ -4,6 +4,8 @@ block headpanel
   a(href='/register').button.green Register
 
 block main
+  if failure
+    .reportFailure= failure
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
     p Username / Email:
