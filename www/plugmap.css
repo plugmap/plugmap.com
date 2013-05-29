@@ -3,11 +3,11 @@ main {
   position:absolute;
   top:3rem;
   bottom:0;
-  width:100%;
   margin: 2rem;
 }
 #map {
   margin: 0;
+  width: 100%;
 }
 .button {
   display: inline-block;
@@ -125,5 +125,4 @@ h1 a {
   padding: .125em .75em;
   text-align: center;
 }
-main {display: block;}
-.reportFailure{background-color: #ffa; text-align: center;}
+.reportFailure{background-color: #faa; text-align: center;}
