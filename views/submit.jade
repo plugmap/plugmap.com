@@ -12,19 +12,19 @@ block main
   #dropmap
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
-    p Longitude:
-    input(type='number',name='longitude',value='-122.33769352761296')#pluglong
-    p Latitude:
-    input(type='number',name='latitude',value='47.61118157075462')#pluglat
-    label Plug image
+    p: label Longitude:
+      input(type='number',name='longitude',value='-122.33769352761296')#pluglong
+    p: label Latitude:
+      input(type='number',name='latitude',value='47.61118157075462')#pluglat
+    p: label Plug image:
       input(type="file", name='plugimage')
-    p Venue:
-    input(type='text',name='venue')
-    p Name:
-    input(type='text',name='name')
-    p Number of sockets:
-    input(type='number',name='sockets',value=2)
-    input(type='submit')
+    p: label Venue:
+      input(type='text',name='venue')
+    p: label Name:
+      input(type='text',name='name')
+    p: label Number of sockets:
+      input(type='number',name='sockets',value=2)
+    p: input(type='submit')
     script.
       /*global L Modernizr*/
 
