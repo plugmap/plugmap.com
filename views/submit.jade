@@ -13,9 +13,9 @@ block main
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
     p Longitude:
-    input(type='number',name='longitude')#pluglong
+    input(type='number',name='longitude',value='-122.33769352761296')#pluglong
     p Latitude:
-    input(type='number',name='latitude')#pluglat
+    input(type='number',name='latitude',value='47.61118157075462')#pluglat
     label Plug image
       input(type="file", name='plugimage')
     p Venue:
@@ -32,6 +32,8 @@ block main
 
       var pluglong = document.getElementById('pluglong');
       var pluglat = document.getElementById('pluglat');
+      var seal =
+      var youAreHere = null;
 
       var dropmap = L.mapbox.map('dropmap', 'stuartpb.map-6cgn20kd')
         .setView([47.61118157075462, -122.33769352761296], 16);
@@ -41,6 +43,7 @@ block main
         {draggable: true});
 
       mrkr.on('dragend',function(evt){
+        seal = false;
         var ll = mrkr.getLatLng();
         pluglong.value = ll.lng;
         pluglat.value = ll.lat;
@@ -48,4 +51,15 @@ block main
 
       mrkr.addTo(dropmap);
 
+      if(Modernizr.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos){
+          if(!youAreHere){
+            youAreHere = L.marker(
+              [pos.latitude, pos.longitude],
+                    {draggable: true});
+          }
+          if(seal){
+            mrkr.setLatLng([pos.latitude, pos.longitude]);
+          }
+        }
 
