@@ -9,6 +9,7 @@ var cfg = require("envigor")();
 var smtpTransport = nodemailer.createTransport(
   "SMTP", cfg.smtp);
 var s3client = knox.createClient(cfg.s3);
+var queue = require('queue-async');
 
 function randomEmailToken(cb) {
   return crypto.randomBytes(48, function(err, buf) {
@@ -62,23 +63,23 @@ function populateSessionLocals(req,res,next){
   return next();
 }
 
-function authenticateUser(userDoc,req,res,redirTo) {
+function authenticateUser(userDoc,req,res,next) {
   //NOTE: this could maybe be smarter (eg. tying user doc in DB to session
   //instead of copying it on login)
   req.session.currentUser = {
     username: userDoc.username,
     email: userDoc.email
   };
-  res.redirect(redirTo || '/');
+  if (next) next();
 }
 
-function unAuthenticateUser(req,res,redirTo) {
+function unAuthenticateUser(req,res,next) {
   delete req.session.currentUser;
 
   //for a couple old sessions - unnecessary after mid-June 2013
   delete req.session.username;
 
-  res.redirect(redirTo || '/');
+  if (next) next();
 }
 
 module.exports = function(db) {
@@ -98,7 +99,7 @@ module.exports = function(db) {
     store: new MongoStore({db:db})}));
 
   app.use(express.urlencoded());
-  app.use(express.multipart());
+  app.use(express.multipart({hash:'sha1'}));
   app.use(express.csrf());
   app.use(populateSessionLocals);
 
@@ -127,22 +128,24 @@ module.exports = function(db) {
           if (err) return next(err);
           if (hashMatch) {
             authenticateUser(user,req,res);
+            return res.redirect('/');
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
-            res.render('login.jade',{
+            return res.render('login.jade',{
               failure:'Invalid username or password.'});
           }
       });
     });
   }); // POST /login
   app.get('/logout', function(req,res){
-    res.render('logout.jade');
+    return res.render('logout.jade');
   });
   app.post('/logout', function(req,res,next) {
     unAuthenticateUser(req,res);
+    return res.redirect('/');
   }); // POST /login
   app.get('/register', function(req, res){
-    res.render('register-request.jade');
+    return res.render('register-request.jade');
   });
   app.post('/register', function(req, res, next) {
     //TODO: validate email address
@@ -214,9 +217,9 @@ module.exports = function(db) {
                 }, function (err,result) {
                   if (err) return next(err);
                   if (req.body.authenticate) {
-                    return authenticateUser(result,req,res);
+                    authenticateUser(result,req,res);
                   }
-                  res.redirect('/');
+                  return res.redirect('/');
                 }); //users.insert
               }); //bcrypt.hash
             }); //bcrypt.genSalt
@@ -247,16 +250,17 @@ module.exports = function(db) {
   });
   app.get('/submit', function(req,res){
     if (req.session.currentUser) {
-    res.render('submit.jade');
+      return res.render('submit.jade');
     } else {
       //NOTE: this should have a query flag denoting it should say
       //"you must be signed in to submit plugs"
-      res.redirect('/login');
+      return res.redirect('/login');
     }
   });
   app.post('/submit', function(req,res,next){
     if(req.session.currentUser) {
-      plugs.insert({
+      var q = queue();
+      q.defer(plugs.insert,{
         type: "Feature",
         geometry: {
           type: "Point",
@@ -265,12 +269,20 @@ module.exports = function(db) {
         properties: {
           venue: req.body.venue,
           name: req.body.name,
+          image: req.files.plugimage.hash,
           sockets: parseInt(req.body.sockets,10),
-          owner: res.session.currentUser
+          //NOTE: this could arguably be the username
+          owner: res.session.currentUser._id
         }
-      },function(err,inserted){
+      });
+      q.defer(s3client.putImage,req.files.plugimage.path,'/'+req.files.plugimage.hash);
+      q.await(function (err,inserted,uploadResult) {
         if (err) return next(err);
-        return res.redirect('/plugs/' + inserted._id);
+        if (inserted && res.statusCode == 200) {
+          return res.redirect('/plugs/' + inserted._id);
+        } else {
+          return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
+        }
       });
     } else {
       //TODO: render "Your session appears to have timed out or something"
