@@ -158,7 +158,7 @@ module.exports = function(db) {
       //TODO: set tokens to expire
       tokens.insert({_id:token, type:'register',
         email: email},
-      function(err, written){
+      function(err, inserted){
         if (err) return next(err);
         smtpTransport.sendMail({
           to: email,
@@ -215,10 +215,10 @@ module.exports = function(db) {
                   unLower: req.body.username.toLowerCase(),
                   email: tokenDoc.email,
                   passhash: req.body.password ? hash : impossibleHash
-                }, function (err,result) {
+                }, function (err,inserted) {
                   if (err) return next(err);
                   if (req.body.authenticate) {
-                    authenticateUser(result,req,res);
+                    authenticateUser(inserted[0],req,res);
                   }
                   return res.redirect('/');
                 }); //users.insert
