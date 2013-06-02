@@ -71,7 +71,7 @@ function authenticateUser(userDoc,req,res,redirTo) {
   res.redirect(redirTo || '/');
 }
 
-function unAuthenticateUser(userDoc,req,res,redirTo) {
+function unAuthenticateUser(req,res,redirTo) {
   delete req.session.currentUser;
 
   //for a couple old sessions - unnecessary after mid-June 2013
@@ -125,7 +125,7 @@ module.exports = function(db) {
         user ? user.passhash : impossibleHash, function(err, hashMatch) {
           if (err) return next(err);
           if (hashMatch) {
-
+            authenticateUser(user,req,res);
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
             res.render('login.jade',{
@@ -138,25 +138,7 @@ module.exports = function(db) {
     res.render('logout.jade');
   });
   app.post('/logout', function(req,res,next) {
-    //NOTE: this should be brute-force-proofed
-    users.findOne({$or:[{unLower: req.body.username.toLowerCase()},
-      {email: req.body.username.toLowerCase()}]},
-      function(err, user) {
-
-      if (err) return next(err);
-      // Compare against an impossible hash if no user for timing reasons.
-      bcrypt.compare(req.body.password,
-        user ? user.passhash : impossibleHash, function(err, hashMatch) {
-          if (err) return next(err);
-          if (hashMatch) {
-
-          } else {
-            //NOTE: Responding to the post with a non-redirect isn't too cool
-            res.render('login.jade',{
-              failure:'Invalid username or password.'});
-          }
-      });
-    });
+    unAuthenticateUser(req,res);
   }); // POST /login
   app.get('/register', function(req, res){
     res.render('register-request.jade');
