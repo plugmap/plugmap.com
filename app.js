@@ -260,31 +260,33 @@ module.exports = function(db) {
   });
   app.post('/submit', function(req,res,next){
     if(req.session.currentUser) {
-      var q = queue();
-      q.defer(function(cb){plugs.insert({
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [req.body.longitude, req.body.latitude]
-        },
-        properties: {
-          venue: req.body.venue,
-          name: req.body.name,
-          image: req.files.plugimage.hash,
-          sockets: parseInt(req.body.sockets,10),
-          //NOTE: this could arguably be the username
-          owner: req.session.currentUser._id
-        }
-      },cb) });
-      q.defer(s3client.putImage,req.files.plugimage.path,'/'+req.files.plugimage.hash);
-      q.await(function (err,inserted,uploadResult) {
-        if (err) return next(err);
-        if (inserted && uploadResult.statusCode == 200) {
-          return res.redirect('/plugs/' + inserted._id);
-        } else {
-          return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
-        }
-      });
+      queue()
+        .defer(plugs.insert.bind(plugs),{
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [req.body.longitude, req.body.latitude]
+          },
+          properties: {
+            venue: req.body.venue,
+            name: req.body.name,
+            image: req.files.plugimage.hash,
+            sockets: parseInt(req.body.sockets,10),
+            //NOTE: this could arguably be the username
+            owner: req.session.currentUser._id
+          }
+        })
+        .defer(s3client.putImage.bind(s3client),
+          req.files.plugimage.path,
+          '/' + req.files.plugimage.hash)
+        .await(function (err,inserted,uploadResult) {
+          if (err) return next(err);
+          if (inserted && uploadResult.statusCode == 200) {
+            return res.redirect('/plugs/' + inserted._id);
+          } else {
+            return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
+          }
+        });
     } else {
       //TODO: render "Your session appears to have timed out or something"
       res.render('stub.jade');
