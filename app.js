@@ -278,7 +278,8 @@ module.exports = function(db) {
         })
         .defer(s3client.putFile.bind(s3client),
           req.files.plugimage.path,
-          '/' + req.files.plugimage.hash)
+          '/' + req.files.plugimage.hash,
+          { 'x-amz-acl': 'public-read' })
         .await(function (err,inserted,uploadResult) {
           if (err) return next(err);
           if (inserted && uploadResult.statusCode == 200) {
