@@ -279,7 +279,7 @@ module.exports = function(db) {
       q.defer(s3client.putImage,req.files.plugimage.path,'/'+req.files.plugimage.hash);
       q.await(function (err,inserted,uploadResult) {
         if (err) return next(err);
-        if (inserted && res.statusCode == 200) {
+        if (inserted && uploadResult.statusCode == 200) {
           return res.redirect('/plugs/' + inserted._id);
         } else {
           return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
