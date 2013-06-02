@@ -41,9 +41,19 @@ if(navigator.geolocation) {
       //youAreHere.addTo(dropmap);
       youAreHereCircle = L.circle(
         [pos.latitude, pos.longitude], pos.accuracy,
-        {color: 'blue'});
+        {color: '#03f'});
       youAreHereCircle.addTo(dropmap);
 
+      //if the user has already started dragging the marker
+      /*if (!seal){
+        var ll = mrkr.getLatLng();
+        dropmap.fitBounds([
+          [Math.min(pos.latitude - pos.accuracy, ll.lat),
+            Math.min(pos.longitude - pos.accuracy, ll.lng)],
+          [Math.max(pos.latitude + pos.accuracy, ll.lat),
+            Math.max(pos.longitude + pos.accuracy, ll.lng)]
+        ]);
+      }*/
     } else {
       youAreHere.setLatLng([pos.latitude, pos.longitude]);
       youAreHereCircle.setLatLng([pos.latitude, pos.longitude]);
@@ -52,6 +62,8 @@ if(navigator.geolocation) {
 
     if(seal){
       mrkr.setLatLng([pos.latitude, pos.longitude]);
+      pluglong.value = pos.longitude;
+      pluglat.value = pos.latitude;
       dropmap.panTo([pos.latitude, pos.longitude]);
     }
   }, null, {enableHighAccuracy: true});
