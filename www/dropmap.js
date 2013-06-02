@@ -35,14 +35,13 @@ if(navigator.geolocation) {
         [pos.latitude, pos.longitude],
         { draggable: true,
           icon: L.divIcon({
-            iconSize: [16, 16],
             className: 'you-are-here-icon',
-            html: '&#x25C9;'})
+            html: 'you are here'})
         });
-      youAreHere.addTo(dropmap);
+      //youAreHere.addTo(dropmap);
       youAreHereCircle = L.circle(
         [pos.latitude, pos.longitude], pos.accuracy,
-        {color: '#f00'});
+        {color: 'blue'});
       youAreHereCircle.addTo(dropmap);
 
     } else {
