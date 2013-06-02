@@ -135,7 +135,7 @@ module.exports = function(db) {
     });
   }); // POST /login
   app.get('/logout', function(req,res){
-    res.render('login.jade');
+    res.render('logout.jade');
   });
   app.post('/logout', function(req,res,next) {
     //NOTE: this should be brute-force-proofed
