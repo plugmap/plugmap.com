@@ -276,7 +276,7 @@ module.exports = function(db) {
             owner: req.session.currentUser._id
           }
         })
-        .defer(s3client.putImage.bind(s3client),
+        .defer(s3client.putFile.bind(s3client),
           req.files.plugimage.path,
           '/' + req.files.plugimage.hash)
         .await(function (err,inserted,uploadResult) {
