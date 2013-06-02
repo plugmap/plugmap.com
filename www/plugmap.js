@@ -8,16 +8,6 @@ var plugicon = L.icon({iconUrl:'happy-plug-icon.svg',
 var map = L.mapbox.map('map', 'stuartpb.map-6cgn20kd')
   .setView([47.61118157075462, -122.33769352761296], 16);
 
-function plugInfo(plug){
-  return '<h2 class="venuename">' + plug.venue + '</h2>';
-}
-
-function addPlugMarker(plug){
-  var mrkr = L.marker(plug.latlng,{icon:plugicon});
-  mrkr.bindPopup(plugInfo(plug));
-  mrkr.addTo(map);
-}
-
 function getPlugs(cb) {
   var req = new XMLHttpRequest();
   req.open('GET', '/api/v0/plugs', true);
@@ -47,12 +37,32 @@ var markers = new L.MarkerClusterGroup({
     }
 });
 
+function htContent(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+}
+
+function plugInfo(plug){
+  return '<a href="/plug/' + plug._id + '" class="plug-popup">'
+    + '<h2 class="venuename">' + htContent(plug.properties.venue) + '</h2>'
+    + '<h3 class="plugname">' + htContent(plug.properties.name) + '</h3>'
+    + '</a>';
+}
+
+function addPlugMarker(plug){
+  var mrkr = L.marker([
+    plug.geometry.coordinates[1],
+    plug.geometry.coordinates[0]],
+    {icon:plugicon});
+  mrkr.bindPopup(plugInfo(plug));
+  mrkr.addTo(markers);
+}
+
 getPlugs(function(err,plugs){
-  plugs.forEach(function (plug){
-    var marker = L.marker([plug.geometry.coordinates[1],plug.geometry.coordinates[0]],{icon:plugicon});
-    marker.bindPopup(plug.properties.venue);
-    markers.addLayer(marker);
-  });
+  plugs.forEach(addPlugMarker);
   map.addLayer(markers);
 });
 
@@ -66,7 +76,7 @@ function positionalLocator(geo) {
 }
 
 function locateMe() {
-  if(Modernizr.geolocation) {
+  if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       positionalLocator,locationlessLocator,{enableHighAccuracy:true});
   } else {
@@ -74,10 +84,5 @@ function locateMe() {
   }
 }
 
-function gimmeCoords(){
-  map.on('click',function(evt){
-    var mrkr = L.marker(evt.latlng,{icon:plugicon});
-    mrkr.bindPopup(evt.latlng.lat+', '+evt.latlng.lng);
-    mrkr.addTo(map);
-  });
-}
+//this should be handled with a button call later
+locateMe();
