@@ -41,7 +41,7 @@ if(navigator.geolocation) {
       //youAreHere.addTo(dropmap);
       youAreHereCircle = L.circle(
         [pos.latitude, pos.longitude], pos.accuracy,
-        {color: '#03f'});
+        {color: '#03f', weight: 1});
       youAreHereCircle.addTo(dropmap);
 
       //if the user has already started dragging the marker
