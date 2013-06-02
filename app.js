@@ -240,7 +240,7 @@ module.exports = function(db) {
     plugs.findOne({ _id: new ObjectID(req.params.id) }, function(err, plug){
       if(err) return next(err);
       if(plug) {
-        res.render('plug.jade', {plug:plug});
+        res.render('plug.jade', {plug:plug.properties});
       } else {
         res.render('no-plug.jade', {plug:plug},function(err,html){
           if (err) return next(err);
@@ -282,7 +282,7 @@ module.exports = function(db) {
         .await(function (err,inserted,uploadResult) {
           if (err) return next(err);
           if (inserted && uploadResult.statusCode == 200) {
-            return res.redirect('/plugs/' + inserted[0]._id);
+            return res.redirect('/plug/' + inserted[0]._id);
           } else {
             return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
           }
