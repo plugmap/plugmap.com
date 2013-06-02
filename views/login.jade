@@ -6,7 +6,7 @@ block headbutton
   else
     a(href='/register').button.green Register
 
-block main
+block content
   if typeof failure != 'undefined' && failure
     .report-failure= failure
   form(method='post')

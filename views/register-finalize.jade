@@ -1,14 +1,16 @@
 extends layout
 
-block main
+block content
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
     p Enter your desired username:
     input(type='text',name='username')
+    p Enter a full name for your profile:
+    input(type='text',name='displayname',placeholder='eg. Stuart P. Bentley')
     p Enter your desired password:
     input#password(type='password',name='password')
-    input#password2(type='password')
-    p#passwarn Using an empty password will make your account email-login-token-only
+    input#password2(type='password',placeholder='Optional verification')
+    p(style='background-color: #ffa')#passwarn Using an empty password will make your account email-login-token-only
     label
       input(type="checkbox",name="authenticate",checked)
       | Log into my new account when I submit this form
@@ -18,7 +20,10 @@ block main
     var pw2Input = document.getElementById('password2')
     var pWarn = document.getElementById('passwarn')
     function checkAndWarn(){
-      if (pwInput.value == pw2Input.value) {
+      if (pwInput.value == '') {
+        pWarn.textContent = 'Using an empty password will make your account email-login-token-only';
+        pWarn.style.backgroundColor = '#ffa';
+      else if (pwInput.value == pw2Input.value) {
         pWarn.textContent = 'Passwords match';
         pWarn.style.backgroundColor = '#afa';
       } else {

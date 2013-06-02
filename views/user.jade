@@ -1,6 +1,6 @@
 extends layout
 
-block main
+block content
   //if this is the user page for the currently logged-in user
   if username == user.username
     form(action='/logout',method='post')
