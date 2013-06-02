@@ -261,7 +261,7 @@ module.exports = function(db) {
   app.post('/submit', function(req,res,next){
     if(req.session.currentUser) {
       var q = queue();
-      q.defer(plugs.insert,{
+      q.defer(function(cb){plugs.insert({
         type: "Feature",
         geometry: {
           type: "Point",
@@ -275,7 +275,7 @@ module.exports = function(db) {
           //NOTE: this could arguably be the username
           owner: req.session.currentUser._id
         }
-      });
+      }); cb()});
       q.defer(s3client.putImage,req.files.plugimage.path,'/'+req.files.plugimage.hash);
       q.await(function (err,inserted,uploadResult) {
         if (err) return next(err);
