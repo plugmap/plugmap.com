@@ -60,8 +60,9 @@ function locationlessLocator() {
 
 }
 
-function positionalLocator(position) {
-
+function positionalLocator(geo) {
+  var gc = geo.coords;
+  map.panTo([gc.latitude, gc.longitude]);
 }
 
 function locateMe() {
