@@ -73,10 +73,10 @@ function authenticateUser(userDoc,req,res,redirTo) {
 
 function unAuthenticateUser(userDoc,req,res,redirTo) {
   delete req.session.currentUser;
-  
+
   //for a couple old sessions - unnecessary after mid-June 2013
   delete req.session.username;
-  
+
   res.redirect(redirTo || '/');
 }
 
@@ -299,4 +299,6 @@ module.exports = function(db) {
         });
     });
   });
+
+  return app;
 };
