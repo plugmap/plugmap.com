@@ -68,7 +68,8 @@ function authenticateUser(userDoc,req,res,next) {
   //instead of copying it on login)
   req.session.currentUser = {
     username: userDoc.username,
-    email: userDoc.email
+    email: userDoc.email,
+    _id: userDoc._id
   };
   if (next) next();
 }
