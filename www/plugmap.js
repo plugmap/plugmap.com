@@ -19,75 +19,15 @@ function addPlugMarker(plug){
 }
 
 function getPlugs(cb) {
-  //pretend API call
-  return cb(null, [
-    {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [-122.34617471694942, 47.6167248819164]
-      },
-      properties: {
-        venue: "Uptown Espresso",
-        sockets: 2
-      }
-    },
-    {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [-122.34617471694942, 47.6167248819164]
-      },
-      properties: {
-        venue: "Uptown Espresso",
-        sockets: 2
-      }
-    },
-    {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [-122.34617471694942, 47.6167248819164]
-      },
-      properties: {
-        venue: "Uptown Espresso",
-        sockets: 2
-      }
-    },
-    {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [-122.34617471694942, 47.6167248819164]
-      },
-      properties: {
-        venue: "Uptown Espresso",
-        sockets: 2
-      }
-    },
-    {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [-122.34617471694942, 47.6167248819164]
-      },
-      properties: {
-        venue: "Uptown Espresso",
-        sockets: 2
-      }
-    },
-    {
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [-122.34439909458159, 47.616864100941655]
-      },
-      properties: {
-        venue: "Starbucks",
-        sockets: 2
-      }
+  var req = new XMLHttpRequest();
+  req.open('GET', '/api/v0/plugs', true);
+  req.onreadystatechange = function (aEvt) {
+    if (req.readyState == 4) {
+       if(req.status == 200)
+        cb(null,JSON.parse(req.responseText));
     }
-  ]);
+  };
+  req.send(null);
 }
 
 var markers = new L.MarkerClusterGroup({
