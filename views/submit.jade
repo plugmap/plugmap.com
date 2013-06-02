@@ -4,6 +4,7 @@ append styles
   link(href='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.css',rel='stylesheet')
   //if lte IE 8
     link(href='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.ie.css',rel='stylesheet')
+  link(href='/map.css',rel='stylesheet')
 
 append scripts
   script(src='//dnv9my2eseobd.cloudfront.net/mapbox.js/v1.0.3/mapbox.js')
@@ -25,41 +26,4 @@ block main
     p: label Number of sockets:
       input(type='number',name='sockets',value=2)
     p: input(type='submit')
-    script.
-      /*global L Modernizr*/
-
-      "use strict";
-
-      var pluglong = document.getElementById('pluglong');
-      var pluglat = document.getElementById('pluglat');
-      var seal =
-      var youAreHere = null;
-
-      var dropmap = L.mapbox.map('dropmap', 'stuartpb.map-6cgn20kd')
-        .setView([47.61118157075462, -122.33769352761296], 16);
-
-      var mrkr = L.marker(
-        [47.61118157075462, -122.33769352761296],
-        {draggable: true});
-
-      mrkr.on('dragend',function(evt){
-        seal = false;
-        var ll = mrkr.getLatLng();
-        pluglong.value = ll.lng;
-        pluglat.value = ll.lat;
-      });
-
-      mrkr.addTo(dropmap);
-
-      if(Modernizr.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(pos){
-          if(!youAreHere){
-            youAreHere = L.marker(
-              [pos.latitude, pos.longitude],
-                    {draggable: true});
-          }
-          if(seal){
-            mrkr.setLatLng([pos.latitude, pos.longitude]);
-          }
-        }
-
+    script(src='/dropmap.js')

@@ -51,6 +51,35 @@ function api(db){
   return apiapp;
 }
 
+function populateSessionLocals(req,res,next){
+  res.locals({
+    username: req.session.currentUser && req.session.currentUser.username,
+    emailMD5: req.session.currentUser && crypto.createHash('md5')
+      .update(req.session.currentUser.email.toLowerCase()).digest('hex'),
+    csrfToken: req.session._csrf
+  });
+  return next();
+}
+
+function authenticateUser(userDoc,req,res,redirTo) {
+  //NOTE: this could maybe be smarter (eg. tying user doc in DB to session
+  //instead of copying it on login)
+  req.session.currentUser = {
+    username: userDoc.username,
+    email: userDoc.email
+  };
+  res.redirect(redirTo || '/');
+}
+
+function unAuthenticateUser(userDoc,req,res,redirTo) {
+  delete req.session.currentUser;
+  
+  //for a couple old sessions - unnecessary after mid-June 2013
+  delete req.session.username;
+  
+  res.redirect(redirTo || '/');
+}
+
 module.exports = function(db) {
   var plugs = db.collection('plugs');
   var tokens = db.collection('tokens');
@@ -70,9 +99,10 @@ module.exports = function(db) {
   app.use(express.urlencoded());
   app.use(express.multipart());
   app.use(express.csrf());
+  app.use(populateSessionLocals);
 
   app.get('/', function(req,res) {
-    res.render('index.jade', {username: req.session.username});
+    res.render('index.jade');
   });
 
   app.use('/api/v0',api(db));
@@ -81,9 +111,7 @@ module.exports = function(db) {
     '$2a$10$00000000000000000000000000000000000000000000000000000';
 
   app.get('/login', function(req,res){
-    res.render('login.jade',{
-      username: req.session.username,
-      csrfToken: req.session._csrf});
+    res.render('login.jade');
   });
   app.post('/login', function(req,res,next) {
     //NOTE: this should be brute-force-proofed
@@ -97,22 +125,41 @@ module.exports = function(db) {
         user ? user.passhash : impossibleHash, function(err, hashMatch) {
           if (err) return next(err);
           if (hashMatch) {
-            req.session.username = user.username;
-            res.redirect('/');
+
           } else {
             //NOTE: Responding to the post with a non-redirect isn't too cool
             res.render('login.jade',{
-              username: req.session.username,
-              csrfToken: req.session._csrf,
+              failure:'Invalid username or password.'});
+          }
+      });
+    });
+  }); // POST /login
+  app.get('/logout', function(req,res){
+    res.render('login.jade');
+  });
+  app.post('/logout', function(req,res,next) {
+    //NOTE: this should be brute-force-proofed
+    users.findOne({$or:[{unLower: req.body.username.toLowerCase()},
+      {email: req.body.username.toLowerCase()}]},
+      function(err, user) {
+
+      if (err) return next(err);
+      // Compare against an impossible hash if no user for timing reasons.
+      bcrypt.compare(req.body.password,
+        user ? user.passhash : impossibleHash, function(err, hashMatch) {
+          if (err) return next(err);
+          if (hashMatch) {
+
+          } else {
+            //NOTE: Responding to the post with a non-redirect isn't too cool
+            res.render('login.jade',{
               failure:'Invalid username or password.'});
           }
       });
     });
   }); // POST /login
   app.get('/register', function(req, res){
-    res.render('register-request.jade',{
-      username: req.session.username,
-      csrfToken: req.session._csrf});
+    res.render('register-request.jade');
   });
   app.post('/register', function(req, res, next) {
     //TODO: validate email address
@@ -144,8 +191,7 @@ module.exports = function(db) {
               else next(mailError);
             });
           } else {
-            res.render('register-inform.jade',{
-              username: req.session.username});
+            res.render('register-inform.jade');
           }
         }); //sendMail
       }); //tokens.insert
@@ -156,13 +202,9 @@ module.exports = function(db) {
       function(err,tokenDoc){
         if (err) return next(err);
         if (tokenDoc) {
-          res.render('register-finalize.jade',{
-            username: req.session.username,
-            csrfToken: req.session._csrf});
+          res.render('register-finalize.jade');
         } else {
-          res.render('bad-token.jade',{
-            username: req.session.username
-            },function(err,html){
+          res.render('bad-token.jade',function(err,html){
             if (err) return next(err);
             res.send(404,html);
           });
@@ -185,8 +227,7 @@ module.exports = function(db) {
                   username: req.body.username,
                   unLower: req.body.username.toLowerCase(),
                   email: tokenDoc.email,
-                  //TODO: if no password, use impossible hash
-                  passhash: hash
+                  passhash: req.body.password ? hash : impossibleHash
                 }, function (err,result) {
                   if (err) return next(err);
                   if (req.body.authenticate) {
@@ -202,9 +243,7 @@ module.exports = function(db) {
           // NOTE: Bad POSTs should probably get a different error
           // (something that doesn't suggest that the URL might have been
           // entered wrong)
-          res.render('bad-token.jade',{
-            username: req.session.username
-            },function(err,html){
+          res.render('bad-token.jade',function(err,html){
             if (err) return next(err);
             res.send(404,html);
           });
@@ -215,13 +254,9 @@ module.exports = function(db) {
     plugs.findOne({ id: req.params.id }, function(err, plug){
       if(err) return next(err);
       if(plug) {
-        res.render('plug.jade', {
-          username: req.session.username,
-          plug:plug});
+        res.render('plug.jade', {plug:plug});
       } else {
-        res.render('no-plug.jade', {
-          username: req.session.username,
-          plug:plug}, function(err,html){
+        res.render('no-plug.jade', {plug:plug},function(err,html){
           if (err) return next(err);
           res.send(404,html);
         });
@@ -230,9 +265,7 @@ module.exports = function(db) {
   });
   app.get('/submit', function(req,res){
     if (req.session.username) {
-    res.render('submit.jade',{
-      username: req.session.username,
-      csrfToken: req.session._csrf});
+    res.render('submit.jade');
     } else {
       //NOTE: this should have a query flag denoting it should say
       //"you must be signed in to submit plugs"
@@ -246,8 +279,24 @@ module.exports = function(db) {
     } else {
       //TODO: render "Your session appears to have timed out or something"
     }
-    res.render('stub.jade',{username: req.session.username});
+    res.render('stub.jade');
   });
-
-  return app;
+  app.get('/user/:user', function(req,res,next){
+    return users.findOne(
+      {unLower: req.params.user.toLowerCase()}, function(err,user){
+        if (err) return next(err);
+        //force name case sensitivity
+        if (user.username != req.params.user)
+          return res.redirect('/user/'+user.username);
+        else return res.render('user.jade',{
+          //NOTE: I know this is kinda confusing with the identically-named
+          //variables in the locals root
+          user: {
+            username: user.username,
+            emailMD5: crypto.createHash('md5').update(user.email.toLowerCase())
+              .digest('hex')
+          }
+        });
+    });
+  });
 };

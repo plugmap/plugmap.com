@@ -1,11 +1,14 @@
 extends layout
 
-block headpanel
-  a(href='/register').button.green Register
+block headbutton
+  if username
+    a(href='/submit').button.green Add a plug
+  else
+    a(href='/register').button.green Register
 
 block main
   if typeof failure != 'undefined' && failure
-    .reportFailure= failure
+    .report-failure= failure
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
     p Username / Email:

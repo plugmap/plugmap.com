@@ -1,0 +1,9 @@
+extends layout
+
+block main
+  if username
+    form(action='/logout',method='post')
+      input(type='hidden',name='_csrf',value=csrfToken)
+      input(type='submit',value='Log Out')
+  else
+    p You can't log out if you're not logged in!

@@ -127,16 +127,16 @@ function positionalLocator(position) {
 function locateMe() {
   if(Modernizr.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      positionalLocator,locationlessLocator);
+      positionalLocator,locationlessLocator,{enableHighAccuracy:true});
   } else {
     locationlessLocator();
   }
 }
 
 function gimmeCoords(){
-map.on('click',function(evt){
-      var mrkr = L.marker(evt.latlng,{icon:plugicon});
-      mrkr.bindPopup(evt.latlng.lat+', '+evt.latlng.lng);
-      mrkr.addTo(map);
-    });
+  map.on('click',function(evt){
+    var mrkr = L.marker(evt.latlng,{icon:plugicon});
+    mrkr.bindPopup(evt.latlng.lat+', '+evt.latlng.lng);
+    mrkr.addTo(map);
+  });
 }

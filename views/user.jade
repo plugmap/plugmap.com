@@ -1,0 +1,10 @@
+extends layout
+
+block main
+  //if this is the user page for the currently logged-in user
+  if username == user.username
+    form(action='/logout',method='post')
+      input(type='hidden',name='_csrf',value=csrfToken)
+      input(type='submit',value='Log Out')
+
+  //- TODO: stats, owned plugs

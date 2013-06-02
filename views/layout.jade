@@ -16,10 +16,14 @@ html
       h1: a(href='/') PlugMap
       .headpanel
         block headpanel
+          block headbutton
+            if username
+              a(href='/submit').button.green Add a plug
+            else
+              a(href='/login').button.green Log in
           if username
-            a(href='/submit').button.green Add a plug
-          else
-            a(href='/login').button.green Log in
+            a(href='/user/'+username)
+              img(src='//gravatar.com/avatar/'+emailMD5).current-user-avatar
     block content
       main
         block main
