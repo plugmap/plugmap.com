@@ -273,7 +273,7 @@ module.exports = function(db) {
           image: req.files.plugimage.hash,
           sockets: parseInt(req.body.sockets,10),
           //NOTE: this could arguably be the username
-          owner: res.session.currentUser._id
+          owner: req.session.currentUser._id
         }
       });
       q.defer(s3client.putImage,req.files.plugimage.path,'/'+req.files.plugimage.hash);
