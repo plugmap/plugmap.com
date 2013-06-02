@@ -272,8 +272,8 @@ module.exports = function(db) {
             name: req.body.name,
             image: req.files.plugimage.hash,
             sockets: parseInt(req.body.sockets,10),
-            //NOTE: this could arguably be the username
-            owner: req.session.currentUser._id
+            owner: req.session.currentUser._id,
+            from: req.body.from,
           }
         })
         .defer(s3client.putFile.bind(s3client),
@@ -282,10 +282,11 @@ module.exports = function(db) {
           { 'x-amz-acl': 'public-read' })
         .await(function (err,inserted,uploadResult) {
           if (err) return next(err);
-          if (inserted && uploadResult.statusCode == 200) {
+          if (uploadResult.statusCode == 200) {
             return res.redirect('/plug/' + inserted[0]._id);
           } else {
-            return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
+            return res.render('error.jade',{
+              message: 'upload resulted in ' + res.statuscode});
           }
         });
     } else {
@@ -301,17 +302,25 @@ module.exports = function(db) {
         //force name case sensitivity
         if (user.username != req.params.user)
           return res.redirect('/user/'+user.username);
-        else return res.render('user.jade',{
-          //NOTE: I know this is kinda confusing with the identically-named
-          //variables in the locals root
-          user: {
-            username: user.username,
-            emailMD5: crypto.createHash('md5').update(user.email.toLowerCase())
-              .digest('hex')
-          }
-        });
-    });
-  });
+        else {
+          plugs.find({'properties.owner':user._id.toString()})
+            .toArray(function(err,userPlugs){
+
+            if (err) return next(err);
+            else return res.render('user.jade',{
+              //NOTE: I know this is kinda confusing with the identically-named
+              //variables in the locals root
+              user: {
+                username: user.username,
+                emailMD5: crypto.createHash('md5')
+                  .update(user.email.toLowerCase()).digest('hex'),
+                plugs: userPlugs
+              }
+            }); // res.render
+        }); // plugs.find.toArray
+      } // else
+    }); // users.findOne
+  }); // GET /user/:user
 
   return app;
 };
