@@ -9,12 +9,14 @@
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
   background-color: #888;
+  line-height: normal;
 }
 .plug-popup {
-  width: 120px;
+  width: 180px;
+  display: block;
 }
 .popup-image {
-  width: 120px;
+  width: 180px;
 }
 .plug-cluster {
   background-image:url('happy-plug-icon.svg');
@@ -36,5 +38,10 @@
 }
 .venuename, .plugname {
   color: white;
-  overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+a:link {
+  color: inherit;
+  text-decoration: none;
 }
