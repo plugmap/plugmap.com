@@ -282,7 +282,7 @@ module.exports = function(db) {
         .await(function (err,inserted,uploadResult) {
           if (err) return next(err);
           if (inserted && uploadResult.statusCode == 200) {
-            return res.redirect('/plugs/' + inserted._id);
+            return res.redirect('/plugs/' + inserted[0]._id);
           } else {
             return res.render('error.jade',{message:'upload resulted in ' + res.statuscode});
           }
