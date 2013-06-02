@@ -11,12 +11,12 @@ append scripts
 
 block main
   #dropmap
-  form(method='post')
+  form(method='post',enctype="multipart/form-data")
     input(type='hidden',name='_csrf',value=csrfToken)
     p: label Longitude:
-      input(type='number',name='longitude',value='-122.33769352761296')#pluglong
+      input(type='number',step='any',name='longitude',value='-122.33769352761296')#pluglong
     p: label Latitude:
-      input(type='number',name='latitude',value='47.61118157075462')#pluglat
+      input(type='number',step='any',name='latitude',value='47.61118157075462')#pluglat
     p: label Plug image:
       input(type="file", name='plugimage')
     p: label Venue:
