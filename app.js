@@ -2,6 +2,7 @@ var express = require("express");
 var crypto = require('crypto');
 var bcrypt = require('bcrypt');
 var MongoStore = require('connect-mongo')(express);
+var ObjectID = require("mongodb").ObjectID;
 var nodemailer = require('nodemailer');
 var knox = require('knox');
 var cfg = require("envigor")();
@@ -233,7 +234,7 @@ module.exports = function(db) {
       }); //tokens.findOne
   });
   app.get('/plug/:id', function(req,res,next){
-    plugs.findOne({ id: req.params.id }, function(err, plug){
+    plugs.findOne({ _id: new ObjectID(req.params.id) }, function(err, plug){
       if(err) return next(err);
       if(plug) {
         res.render('plug.jade', {plug:plug});
@@ -256,12 +257,26 @@ module.exports = function(db) {
   });
   app.post('/submit', function(req,res,next){
     if(req.session.username) {
-      //TODO: insert plug (heyo!)
-      //TODO: redirect to plug
+      plugs.insert({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [req.body.longitude, req.body.latitude]
+        },
+        properties: {
+          venue: req.body.venue,
+          name: req.body.name,
+          sockets: parseInt(req.body.sockets,10)
+        }
+      },function(err,inserted){
+        if (err) return next(err);
+        return res.redirect('/plugs/' + inserted._id);
+      });
     } else {
       //TODO: render "Your session appears to have timed out or something"
+      res.render('stub.jade');
     }
-    res.render('stub.jade');
+
   });
   app.get('/user/:user', function(req,res,next){
     return users.findOne(
