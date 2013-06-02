@@ -13,6 +13,7 @@ block main
   #dropmap
   form(method='post',enctype="multipart/form-data")
     input(type='hidden',name='_csrf',value=csrfToken)
+    input(type='hidden',name='from',value='websubmit/0.1')
     p: label Longitude:
       input(type='number',step='any',name='longitude',value='-122.33769352761296')#pluglong
     p: label Latitude:
