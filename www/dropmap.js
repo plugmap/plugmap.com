@@ -28,7 +28,8 @@ mrkr.on('dragend',function(evt){
 mrkr.addTo(dropmap);
 
 if(navigator.geolocation) {
-  navigator.geolocation.watchPosition(function(pos){
+  navigator.geolocation.watchPosition(function(geo){
+    var pos = geo.coords;
     if(!youAreHere){
       youAreHere = L.marker(
         [pos.latitude, pos.longitude],
