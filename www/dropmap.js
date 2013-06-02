@@ -1,4 +1,4 @@
-/*global L Modernizr*/
+/*global L*/
 
 "use strict";
 
@@ -27,7 +27,7 @@ mrkr.on('dragend',function(evt){
 
 mrkr.addTo(dropmap);
 
-if(Modernizr.geolocation) {
+if(navigator.geolocation) {
   navigator.geolocation.watchPosition(function(pos){
     if(!youAreHere){
       youAreHere = L.marker(
