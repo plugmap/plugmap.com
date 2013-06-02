@@ -214,8 +214,7 @@ module.exports = function(db) {
                 }, function (err,result) {
                   if (err) return next(err);
                   if (req.body.authenticate) {
-                    //NOTE: This might be better using the user document ID
-                    req.session.username = req.body.username;
+                    return authenticateUser(result,req,res);
                   }
                   res.redirect('/');
                 }); //users.insert
@@ -247,7 +246,7 @@ module.exports = function(db) {
     });
   });
   app.get('/submit', function(req,res){
-    if (req.session.username) {
+    if (req.session.currentUser) {
     res.render('submit.jade');
     } else {
       //NOTE: this should have a query flag denoting it should say
@@ -256,7 +255,7 @@ module.exports = function(db) {
     }
   });
   app.post('/submit', function(req,res,next){
-    if(req.session.username) {
+    if(req.session.currentUser) {
       plugs.insert({
         type: "Feature",
         geometry: {
@@ -266,7 +265,8 @@ module.exports = function(db) {
         properties: {
           venue: req.body.venue,
           name: req.body.name,
-          sockets: parseInt(req.body.sockets,10)
+          sockets: parseInt(req.body.sockets,10),
+          owner: res.session.currentUser
         }
       },function(err,inserted){
         if (err) return next(err);
