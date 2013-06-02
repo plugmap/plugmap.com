@@ -4,6 +4,15 @@
 #dropmap {
   height: 10rem;
 }
+.leaflet-popup-content {
+  margin: 0;
+}
+.leaflet-popup-content-wrapper {
+  background-color: #888;
+}
+.popup-image {
+  width: 120px;
+}
 .plug-cluster {
   background-image:url('happy-plug-icon.svg');
   background-repeat: no-repeat;
