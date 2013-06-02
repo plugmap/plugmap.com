@@ -3,7 +3,7 @@
 "use strict";
 
 var plugicon = L.icon({iconUrl:'happy-plug-icon.svg',
-  iconSize: L.point(29,25)});
+  iconSize: [29.25,29.25]});
 
 var map = L.mapbox.map('map', 'stuartpb.map-6cgn20kd')
   .setView([47.61118157075462, -122.33769352761296], 16);
@@ -102,7 +102,7 @@ var markers = new L.MarkerClusterGroup({
     spiderfyDistanceMultiplier: 1.5,
 
     iconCreateFunction: function(cluster) {
-        return new L.DivIcon({ className: 'plug-cluster', iconSize: L.point(29,25),
+        return new L.DivIcon({ className: 'plug-cluster', iconSize: [29.25,29.25],
           html: '<span class="count">' + cluster.getChildCount() + '</span>' });
     }
 });
