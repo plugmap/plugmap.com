@@ -37,17 +37,17 @@
   font-size: 16px;
   color: red;
 }
-.venuename, .plugname {
+.popup-venuename, .popup-plugname {
   color: white;
   text-overflow: ellipsis;
   margin: 0;
   position: absolute;
 }
-.venuename {
+.popup-venuename {
   top: 4px;
   left: 4px;
 }
-.plugname {
+.popup-plugname {
   top: 20px;
   left: 4px;
 }
