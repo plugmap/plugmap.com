@@ -60,7 +60,7 @@ function addPlugMarker(plug){
     {icon:plugicon});
   mrkr.bindPopup(plugInfo(plug),{
     closeButton: false,
-    maxWidth: 180, //workaround for bug in Leaflet width calculation
+    maxWidth: 179, //workaround for bug in Leaflet width calculation
     offset: [0,0]});
   mrkr.addTo(markers);
 }
