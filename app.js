@@ -1,5 +1,6 @@
-var express = require("express");
+var http = require('http');
 var crypto = require('crypto');
+var express = require("express");
 var bcrypt = require('bcrypt');
 var MongoStore = require('connect-mongo')(express);
 var ObjectID = require("mongodb").ObjectID;
@@ -9,6 +10,7 @@ var cfg = require("envigor")();
 var smtpTransport = nodemailer.createTransport(
   "SMTP", cfg.smtp);
 var s3client = knox.createClient(cfg.s3);
+var s3host = '//' + cfg.s3.bucket + '.' + cfg.s3.endpoint;
 var queue = require('queue-async');
 
 function randomEmailToken(cb) {
@@ -258,36 +260,70 @@ module.exports = function(db) {
       return res.redirect('/login');
     }
   });
+
+  //The widths to get images for.
+  var generateTargetWidths = [360,720,1080];
+
   app.post('/submit', function(req,res,next){
     if(req.session.currentUser) {
-      queue()
-        .defer(plugs.insert.bind(plugs),{
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [req.body.longitude, req.body.latitude]
+
+      var plugDoc = {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [req.body.longitude, req.body.latitude]
+        },
+        properties: {
+          venue: req.body.venue,
+          name: req.body.name,
+          images: {
+            full: req.body.plugimage
           },
-          properties: {
-            venue: req.body.venue,
-            name: req.body.name,
-            image: req.files.plugimage.hash,
-            sockets: parseInt(req.body.sockets,10),
-            owner: req.session.currentUser._id,
-            from: req.body.from,
-          }
-        })
-        .defer(s3client.putFile.bind(s3client),
-          req.files.plugimage.path,
-          '/' + req.files.plugimage.hash,
-          { 'x-amz-acl': 'public-read' })
-        .await(function (err,inserted,uploadResult) {
-          if (err) return next(err);
-          if (uploadResult.statusCode == 200) {
-            return res.redirect('/plug/' + inserted[0]._id);
-          } else {
-            return res.render('error.jade',{
-              message: 'upload resulted in ' + res.statuscode});
-          }
+          sockets: parseInt(req.body.sockets,10),
+          owner: req.session.currentUser._id,
+          from: req.body.from
+        }
+      };
+
+      generateTargetWidths.forEach(function(width) {
+        plugDoc.properties.images[width] =
+          req.body.plugimage + '/convert?w='+width;
+      });
+
+      plugs.insert(plugDoc,function(err,inserted){
+        if (err) return next(err);
+
+        // Save the filepicker results into plugmap's S3 bucket
+        // (filepicker could do this itself, if we didn't need our
+        // own non-AWS endpoints)
+        function crossloadImage (field,targetName) {
+          var updated = {};
+          updated['properties.images.' + field] = s3host + targetName;
+          http.get(inserted[0].properties.images[field], function(res){
+            var headers = {
+              'Content-Length': res.headers['content-length'],
+              'Content-Type': res.headers['content-type'],
+              'x-amz-acl': 'public-read'
+            };
+            s3client.putStream(res, targetName, headers, function(err, res){
+              if(err) return console.error(err);
+
+              plugs.update({_id: inserted[0]._id},
+                updated, function(err,upDoc){
+
+                if(err) return console.error(err);
+              }); //plugs.update
+            }); //s3client.putStream
+          }); //http.get
+        } //crossloadImage
+
+        var basename = req.body.plugimage.match(/\/[^\/]*$/)[0];
+
+        generateTargetWidths.forEach(function(width){
+          crossloadImage(width,basename + '-' + width + 'px');
+        });
+
+        crossloadImage('full',basename);
         });
     } else {
       //TODO: render "Your session appears to have timed out or something"

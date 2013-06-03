@@ -1,7 +1,11 @@
-/*global L*/
+/*global L filepicker*/
 
 "use strict";
 
+// set up filepicker stuff
+filepicker.setKey('AsgVwvIYmRdmv5DsVcXeFz');
+
+// set up Leaflet stuff
 var pluglong = document.getElementById('pluglong');
 var pluglat = document.getElementById('pluglat');
 var seal = true;
