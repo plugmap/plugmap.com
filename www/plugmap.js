@@ -5,8 +5,12 @@
 var plugicon = L.icon({iconUrl:'happy-plug-icon.svg',
   iconSize: [29.25,29.25]});
 
-var map = L.mapbox.map('map', 'stuartpb.map-6cgn20kd')
-  .setView([47.61118157075462, -122.33769352761296], 16);
+var map = L.map('map')
+  .setView([47.61118157075462, -122.33769352761296], 16)
+  .addLayer(L.mapbox.tileLayer('stuartpb.map-6cgn20kd', {
+        detectRetina: true,
+        retinaVersion: 'stuartpb.map-twpbs0dt'
+    }));
 
 function getPlugs(cb) {
   var req = new XMLHttpRequest();
