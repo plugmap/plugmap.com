@@ -325,6 +325,9 @@ module.exports = function(db) {
 
         crossloadImage('full',basename);
 
+        // We could wait for all the relevant images to get loaded onto
+        // our own S3 buckets before replying, but why wait when you can
+        // respond immediately and have the clients download the same sources?
         res.redirect('/plug/'+inserted[0]._id);
         });
     } else {
@@ -350,6 +353,7 @@ module.exports = function(db) {
               //variables in the locals root
               user: {
                 username: user.username,
+                displayname: user.displayname,
                 emailMD5: crypto.createHash('md5')
                   .update(user.email.toLowerCase()).digest('hex'),
                 plugs: userPlugs
