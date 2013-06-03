@@ -8,9 +8,10 @@ var plugicon = L.icon({iconUrl:'happy-plug-icon.svg',
 var map = L.map('map')
   .setView([47.61118157075462, -122.33769352761296], 16)
   .addLayer(L.mapbox.tileLayer('stuartpb.map-6cgn20kd', {
-        detectRetina: true,
-        retinaVersion: 'stuartpb.map-twpbs0dt'
-    }));
+    maxZoom: 19,
+    detectRetina: true,
+    retinaVersion: 'stuartpb.map-twpbs0dt'
+  }));
 
 function getPlugs(cb) {
   var req = new XMLHttpRequest();
@@ -25,28 +26,30 @@ function getPlugs(cb) {
 }
 
 var markers = new L.MarkerClusterGroup({
-    spiderfyOnMaxZoom: true,
+  spiderfyOnMaxZoom: true,
 
-    // For some reason I don't understand, that doesn't occur in the example
-    // cases for this plugin, leaving this unset results in clustering being
-    // disabled at the lowest zoom level.
-    // Worth investigating, later.
-    disableClusteringAtZoom: 20,
+  // Either the plugin defaults to assuming your maxZoom is 18, or the
+  // mapbox tile constructor wasn't setting maxZoom correctly. Either way,
+  // without setting this, the plugin defaults to disabling clustering at
+  // level 19, and that's no good. Setting it to 20 makes it so clustering
+  // doesn't get disabled at our highest zoom level (19).
+  disableClusteringAtZoom: 20,
 
-    spiderfyDistanceMultiplier: 1.5,
+  //Space the spiderfied plugs out a bit.
+  spiderfyDistanceMultiplier: 1.5,
 
-    iconCreateFunction: function(cluster) {
-        return new L.DivIcon({ className: 'plug-cluster', iconSize: [29.25,29.25],
-          html: '<span class="count">' + cluster.getChildCount() + '</span>' });
-    }
+  iconCreateFunction: function(cluster) {
+      return new L.DivIcon({ className: 'plug-cluster', iconSize: [29.25,29.25],
+        html: '<span class="count">' + cluster.getChildCount() + '</span>' });
+  }
 });
 
 function htContent(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 function plugInfo(plug){

@@ -16,6 +16,7 @@ var dropmap = L.map('dropmap')
   .setView([47.61118157075462, -122.33769352761296], 16)
   .addLayer(L.mapbox.tileLayer('stuartpb.map-6cgn20kd', {
     detectRetina: true,
+    maxZoom: 19,
     retinaVersion: 'stuartpb.map-twpbs0dt'
   }));
 
