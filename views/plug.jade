@@ -9,7 +9,7 @@ block content
     h2.plugvenue= plug.venue
     h3.plugname= plug.name
     .ownercredit
-      | mapped by
+      ="mapped by "
       a(href='/user/'+plug.owner.username).ownername
         = plug.owner.username
         img(src='//gravatar.com/avatar/'+plug.owner.emailMD5).owneravatar
