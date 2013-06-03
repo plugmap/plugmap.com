@@ -4,7 +4,7 @@ append styles
   link(href='/styles/login.css',rel='stylesheet')
 
 block headbutton
-  if username
+  if currentUser
     a(href='/submit').button.green Add a plug
   else
     a(href='/register').button.green Register

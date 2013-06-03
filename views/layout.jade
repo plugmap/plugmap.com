@@ -24,13 +24,13 @@ html
       .headpanel
         block headpanel
           block headbutton
-            if username
+            if currentUser
               a(href='/submit').button.green Add a plug
             else
               a(href='/login').button.green Log in
-          if username
-            a(href='/user/'+username,title=username)
-              img(src='//gravatar.com/avatar/'+emailMD5).current-user-avatar
+          if currentUser
+            a(href='/user/'+currentUser.username,title=username)
+              img(src='//gravatar.com/avatar/'+currentUser.emailMD5).current-user-avatar
     block main
       main
         block content

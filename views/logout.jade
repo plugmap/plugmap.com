@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  if username
+  if currentUser
     form(action='/logout',method='post')
       input(type='hidden',name='_csrf',value=csrfToken)
       input(type='submit',value='Log Out')

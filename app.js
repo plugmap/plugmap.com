@@ -61,11 +61,15 @@ function md5sum(str){
 
 function populateSessionLocals(req,res,next){
   res.locals({
-    username: req.session.currentUser && req.session.currentUser.username,
-    emailMD5: req.session.currentUser &&
-      md5sum(req.session.currentUser.email.toLowerCase()),
     csrfToken: req.session._csrf
   });
+
+  res.locals.set('currentUser', req.session.currentUser ? {
+    _id: req.session.currentUser._id,
+    username: req.session.currentUser.username,
+    emailMD5: md5sum(req.session.currentUser.email.toLowerCase())
+  } : null);
+
   return next();
 }
 
@@ -363,6 +367,7 @@ module.exports = function(db) {
                 username: user.username,
                 displayname: user.displayname,
                 emailMD5: md5sum(user.email.toLowerCase()),
+                _id: user._id,
                 plugs: userPlugs
               }
             }); // res.render
