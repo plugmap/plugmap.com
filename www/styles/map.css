@@ -32,16 +32,20 @@
 }
 .popup-venuename, .popup-plugname {
   color: white;
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
+  height: 1.2em;
+  width: 100%;
+  padding: 0 4px;
+  box-sizing: border-box;
   margin: 0;
   position: absolute;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
 }
 .popup-venuename {
-  bottom: 4px;
-  left: 4px;
+  bottom: 2px;
 }
 .popup-plugname {
-  bottom: 20px;
-  left: 4px;
+  bottom: 1.5rem;
 }
