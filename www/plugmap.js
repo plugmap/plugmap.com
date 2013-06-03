@@ -58,7 +58,9 @@ function addPlugMarker(plug){
     plug.geometry.coordinates[1],
     plug.geometry.coordinates[0]],
     {icon:plugicon});
-  mrkr.bindPopup(plugInfo(plug),{offset:[0,0]});
+  mrkr.bindPopup(plugInfo(plug),{
+    closeButton: false,
+    offset: [0,0]});
   mrkr.addTo(markers);
 }
 
