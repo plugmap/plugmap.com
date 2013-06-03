@@ -13,6 +13,9 @@ In addition to the envigor configurations for mongodb, s3, smtp, and facebook:
 
 **Note: Actually, all these things are hard-coded. This is more of a wishlist.**
 
+- SESSION_SECRET: A secret string to authenticate session tokens (for some
+  reason). Recommended to use output from `pwgen -sB 64 1`.
+
 ## Setup
 
 1. Set up all the things you'll need for this app:
