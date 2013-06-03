@@ -64,11 +64,11 @@ function populateSessionLocals(req,res,next){
     csrfToken: req.session._csrf
   });
 
-  res.locals.set('currentUser', req.session.currentUser ? {
+  res.locals.currentUser = req.session.currentUser ? {
     _id: req.session.currentUser._id,
     username: req.session.currentUser.username,
     emailMD5: md5sum(req.session.currentUser.email.toLowerCase())
-  } : null);
+  } : null;
 
   return next();
 }
