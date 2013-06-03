@@ -1,6 +1,9 @@
 extends layout
 
+append styles
+  link(href='/styles/plug.css',rel='stylesheet')
+
 block content
-  h2= plug.venue
-  h3= plug.name
-  img(src=plug.images[720])
+    h2= plug.venue
+    h3= plug.name
+    img(src=plug.images[720])

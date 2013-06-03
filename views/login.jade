@@ -1,5 +1,8 @@
 extends layout
 
+append styles
+  link(href='/styles/login.css',rel='stylesheet')
+
 block headbutton
   if username
     a(href='/submit').button.green Add a plug

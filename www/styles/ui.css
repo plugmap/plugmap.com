@@ -115,24 +115,3 @@ h1 a {
   color: inherit;
   text-decoration: none;
 }
-.report-failure {
-  background-color: #faa;
-  text-align: center;
-}
-.current-user-avatar {
-  height: 30px;
-  width: 30px;
-  border: 1px solid #777;
-  border-radius: 3px;
-  margin-left: 6px;
-}
-.user-page-avatar {
-  height: 210px;
-  width: 210px;
-  padding: 5px;
-  border: 1px solid #777;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15)
-}
-.logout-button {
-  float: right;
-}

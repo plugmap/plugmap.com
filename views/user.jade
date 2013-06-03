@@ -1,5 +1,8 @@
 extends layout
 
+append styles
+  link(href='/styles/user.css',rel='stylesheet')
+
 block content
   //- if this is the user page for the currently logged-in user
   if username == user.username
@@ -18,6 +21,6 @@ block content
   h3= user.username
 
   h2 Submitted plugs
-  ul
+  ul.pluglist
     each plug in user.plugs
       li: a(href='/plug/'+plug._id) #{plug.properties.venue} - #{plug.properties.name}
