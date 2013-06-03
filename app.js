@@ -309,7 +309,7 @@ module.exports = function(db) {
               if(err) return console.error(err);
 
               plugs.update({_id: inserted[0]._id},
-                updated, function(err,upDoc){
+                {'$set':updated}, function(err,upDoc){
 
                 if(err) return console.error(err);
               }); //plugs.update
