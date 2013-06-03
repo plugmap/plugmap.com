@@ -29,7 +29,7 @@ html
             else
               a(href='/login').button.green Log in
           if currentUser
-            a(href='/user/'+currentUser.username,title=username)
+            a(href='/user/'+currentUser.username,title=currentUser.username)
               img(src='//gravatar.com/avatar/'+currentUser.emailMD5).current-user-avatar
     block main
       main
