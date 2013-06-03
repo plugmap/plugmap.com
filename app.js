@@ -324,6 +324,8 @@ module.exports = function(db) {
         });
 
         crossloadImage('full',basename);
+
+        res.redirect('/plug/'+inserted[0]._id);
         });
     } else {
       //TODO: render "Your session appears to have timed out or something"
