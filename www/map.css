@@ -8,7 +8,7 @@
   margin: 0;
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  background-color: #888;
+  background-color: #000;
   line-height: normal;
 }
 .plug-popup {
