@@ -55,11 +55,15 @@ function api(db){
   return apiapp;
 }
 
+function md5sum(str){
+  return crypto.createHash('md5').update(str).digest('hex');
+}
+
 function populateSessionLocals(req,res,next){
   res.locals({
     username: req.session.currentUser && req.session.currentUser.username,
-    emailMD5: req.session.currentUser && crypto.createHash('md5')
-      .update(req.session.currentUser.email.toLowerCase()).digest('hex'),
+    emailMD5: req.session.currentUser &&
+      md5sum(req.session.currentUser.email.toLowerCase()),
     csrfToken: req.session._csrf
   });
   return next();
@@ -280,7 +284,11 @@ module.exports = function(db) {
             full: req.body.plugimage
           },
           sockets: parseInt(req.body.sockets,10),
-          owner: req.session.currentUser._id,
+          owner: {
+            username: req.session.currentUser.username,
+            emailMD5: md5sum(req.session.currentUser.email.toLowerCase()),
+            _id: req.session.currentUser._id
+          },
           from: req.body.from
         }
       };
@@ -354,8 +362,7 @@ module.exports = function(db) {
               user: {
                 username: user.username,
                 displayname: user.displayname,
-                emailMD5: crypto.createHash('md5')
-                  .update(user.email.toLowerCase()).digest('hex'),
+                emailMD5: md5sum(user.email.toLowerCase()),
                 plugs: userPlugs
               }
             }); // res.render
