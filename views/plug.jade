@@ -5,6 +5,11 @@ append styles
 
 block content
   .infocard
+    img(src=plug.images[720]).plugimage
     h2.plugvenue= plug.venue
     h3.plugname= plug.name
-    img(src=plug.images[720]).plugimage
+    .ownercredit
+      | mapped by
+      a(href='/user/'+plug.owner.username).ownername
+        = plug.owner.username
+        img(src='//gravatar.com/avatar/'+plug.owner.emailMD5).owneravatar

@@ -10,18 +10,33 @@ main {
   width: 100%;
 }
 
-.venuename, .plugname {
+.plugvenue, .plugname, .usercredit {
   color: white;
   text-overflow: ellipsis;
   margin: 0;
   position: absolute;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
 }
-.venuename {
+
+.plugvenue {
   top: 4px;
   left: 4px;
 }
 .plugname {
-  top: 20px;
+  top: 2rem;
   left: 4px;
+}
+.ownercredit {
+  top: 4px;
+  right: 4px;
+}
+.ownername {
+  font-weight: bold
+}
+.owneravatar {
+  height: 30px;
+  width: 30px;
+  border: 1px solid #777;
+  border-radius: 3px;
+  margin-left: 6px;
 }
