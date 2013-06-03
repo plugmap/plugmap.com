@@ -51,17 +51,6 @@ if(navigator.geolocation) {
         [pos.latitude, pos.longitude], pos.accuracy,
         {color: '#03f', weight: 1});
       youAreHereCircle.addTo(dropmap);
-
-      //if the user has already started dragging the marker
-      /*if (!seal){
-        var ll = mrkr.getLatLng();
-        dropmap.fitBounds([
-          [Math.min(pos.latitude - pos.accuracy, ll.lat),
-            Math.min(pos.longitude - pos.accuracy, ll.lng)],
-          [Math.max(pos.latitude + pos.accuracy, ll.lat),
-            Math.max(pos.longitude + pos.accuracy, ll.lng)]
-        ]);
-      }*/
     } else {
       youAreHere.setLatLng([pos.latitude, pos.longitude]);
       youAreHereCircle.setLatLng([pos.latitude, pos.longitude]);
