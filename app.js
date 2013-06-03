@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 var crypto = require('crypto');
 var express = require("express");
 var bcrypt = require('bcrypt');
@@ -299,7 +299,7 @@ module.exports = function(db) {
         function crossloadImage (field,targetName) {
           var updated = {};
           updated['properties.images.' + field] = s3host + targetName;
-          http.get(inserted[0].properties.images[field], function(res){
+          https.get(inserted[0].properties.images[field], function(res){
             var headers = {
               'Content-Length': res.headers['content-length'],
               'Content-Type': res.headers['content-type'],
