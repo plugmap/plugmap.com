@@ -47,8 +47,9 @@ function htContent(str) {
 
 function plugInfo(plug){
   return '<a href="/plug/' + plug._id + '" class="plug-popup">'
-    + '<h2 class="venuename">' + htContent(plug.properties.venue) + '</h2>'
-    + '<h3 class="plugname">' + htContent(plug.properties.name) + '</h3>'
+    + '<img class="popup-image" src="' + plug.properties.images[360] + '">'
+    + '<h2 class="popup-venuename">' + htContent(plug.properties.venue) + '</h2>'
+    + '<h3 class="popup-plugname">' + htContent(plug.properties.name) + '</h3>'
     + '</a>';
 }
 
