@@ -4,6 +4,7 @@ append styles
   link(href='/styles/plug.css',rel='stylesheet')
 
 block content
-    h2= plug.venue
-    h3= plug.name
-    img(src=plug.images[720])
+  .infocard
+    h2.plugvenue= plug.venue
+    h3.plugname= plug.name
+    img(src=plug.images[720]).plugimage
