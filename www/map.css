@@ -33,10 +33,6 @@
   padding: .125em .75em;
   text-align: center;
 }
-.you-are-here-icon {
-  font-size: 16px;
-  color: red;
-}
 .popup-venuename, .popup-plugname {
   color: white;
   text-overflow: ellipsis;

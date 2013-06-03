@@ -10,7 +10,6 @@ var pluglong = document.getElementById('pluglong');
 var pluglat = document.getElementById('pluglat');
 var seal = true;
 var youAreHere = null;
-var youAreHereCircle = null;
 
 var dropmap = L.map('dropmap')
   .setView([47.61118157075462, -122.33769352761296], 16)
@@ -40,22 +39,13 @@ if(navigator.geolocation) {
   navigator.geolocation.watchPosition(function(geo){
     var pos = geo.coords;
     if(!youAreHere){
-      youAreHere = L.marker(
-        [pos.latitude, pos.longitude],
-        { draggable: true,
-          icon: L.divIcon({
-            className: 'you-are-here-icon',
-            html: 'you are here'})
-        });
-      //youAreHere.addTo(dropmap);
-      youAreHereCircle = L.circle(
+      youAreHere = L.circle(
         [pos.latitude, pos.longitude], pos.accuracy,
         {color: '#03f', weight: 1});
-      youAreHereCircle.addTo(dropmap);
+      youAreHere.addTo(dropmap);
     } else {
       youAreHere.setLatLng([pos.latitude, pos.longitude]);
-      youAreHereCircle.setLatLng([pos.latitude, pos.longitude]);
-      youAreHereCircle.setRadius(pos.accuracy);
+      youAreHere.setRadius(pos.accuracy);
     }
 
     if(seal){
