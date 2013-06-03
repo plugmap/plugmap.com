@@ -42,13 +42,14 @@
   text-overflow: ellipsis;
   margin: 0;
   position: absolute;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
 }
 .popup-venuename {
-  top: 4px;
+  bottom: 4px;
   left: 4px;
 }
 .popup-plugname {
-  top: 20px;
+  bottom: 20px;
   left: 4px;
 }
 a:link {
