@@ -352,7 +352,7 @@ module.exports = function(db) {
         if (user.username != req.params.user)
           return res.redirect('/user/'+user.username);
         else {
-          plugs.find({'properties.owner':user._id.toString()})
+          plugs.find({'properties.owner._id':user._id.toString()})
             .toArray(function(err,userPlugs){
 
             if (err) return next(err);
