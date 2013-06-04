@@ -55,11 +55,15 @@ function htContent(str) {
 }
 
 function plugInfo(plug){
+  var props = plug.properties;
   return '<a href="/plug/' + plug._id + '" class="plug-popup">'
-    + '<img class="popup-image" src="' + plug.properties.images[360] + '">'
-    + '<h2 class="popup-venuename">' + htContent(plug.properties.venue) + '</h2>'
-    + '<h3 class="popup-plugname">' + htContent(plug.properties.name) + '</h3>'
-    + '</a>';
+    + '<img class="popup-image" src="' + props.images[360] + '">'
+    + '<h2 class="popup-venuename">' + htContent(props.venue) + '</h2>'
+    + '<h3 class="popup-plugname">' + htContent(props.name) + '</h3>'
+    + '<a class="popup-ownerlink" href="/users/' + props.owner.username
+    + '"><img class="popup-owneravatar" src="//gravatar.com/avatar/'
+    + props.owner.MD5 + '?s=36?" alt="mapped by ' + props.owner.username
+    + '"></a>';
 }
 
 function addPlugMarker(plug){

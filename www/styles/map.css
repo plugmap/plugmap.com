@@ -49,3 +49,18 @@
 .popup-plugname {
   bottom: 1.5rem;
 }
+
+.popup-ownerlink {
+  padding: 0 2px;
+  margin: 0;
+  position: absolute;
+  top: 2px;
+  right:0;
+}
+
+.popup-owneravatar {
+  height: 16px;
+  width: 16px;
+  border: 1px solid #777;
+  border-radius: 2px;
+}
