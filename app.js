@@ -242,7 +242,10 @@ module.exports = function(db) {
                 }); //bcrypt.hash
               }); //bcrypt.genSalt
             }); //tokens.remove
-          } // if passphrase
+          } else { // if passphrase is incorrect
+            //TODO: should include an error qs parameter
+            res.redirect(req.originalUrl);
+          }
         } else {
           // NOTE: Bad POSTs should probably get a different error
           // (something that doesn't suggest that the URL might have been
