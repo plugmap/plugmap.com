@@ -19,6 +19,8 @@ var dropmap = L.map('dropmap')
     retinaVersion: 'stuartpb.map-twpbs0dt'
   }));
 
+  dropmap.attributionControl.setPrefix('<a href="/about">About</a>');
+
 var mrkr = L.marker(
   [47.61118157075462, -122.33769352761296],
   {

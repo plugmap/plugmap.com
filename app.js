@@ -124,6 +124,9 @@ module.exports = function(db) {
     '$2a$10$00000000000000000000000000000000000000000000000000000';
 
   app.get('/login', function(req,res){
+      res.render('login.jade');
+  });
+  app.get('/login', function(req,res){
     res.render('login.jade');
   });
   app.post('/login', function(req,res,next) {

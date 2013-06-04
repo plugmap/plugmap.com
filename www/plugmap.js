@@ -13,6 +13,8 @@ var map = L.map('map')
     retinaVersion: 'stuartpb.map-twpbs0dt'
   }));
 
+  map.attributionControl.setPrefix('<a href="/about">About</a>');
+
 function getPlugs(cb) {
   var req = new XMLHttpRequest();
   req.open('GET', '/api/v0/plugs', true);
