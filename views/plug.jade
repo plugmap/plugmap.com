@@ -11,7 +11,7 @@ block content
     .ownercredit
       ="mapped by "
       //- if the currently logged-in user mapped this
-      if currentUser && user._id == currentUser._id
+      if currentUser && plug.owner._id == currentUser._id
         a(href='/user/'+plug.owner.username).ownername you
       else
         a(href='/user/'+plug.owner.username).ownername
