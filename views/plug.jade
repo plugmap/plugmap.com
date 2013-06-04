@@ -10,6 +10,10 @@ block content
     h3.plugname= plug.name
     .ownercredit
       ="mapped by "
-      a(href='/user/'+plug.owner.username).ownername
-        = plug.owner.username
-        img(src='//gravatar.com/avatar/'+plug.owner.emailMD5).owneravatar
+      //- if the currently logged-in user mapped this
+      if currentUser && user._id == currentUser._id
+        a(href='/user/'+plug.owner.username).ownername you
+      else
+        a(href='/user/'+plug.owner.username).ownername
+          = plug.owner.username
+          img(src='//gravatar.com/avatar/'+plug.owner.emailMD5).owneravatar
