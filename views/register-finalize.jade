@@ -11,6 +11,8 @@ block content
     input#password(type='password',name='password')
     input#password2(type='password',placeholder='Optional verification')
     p(style='background-color: #ffa')#passwarn Using an empty password will make your account email-login-token-only
+    p Registration is currently limited to those who know the secret phrase:
+    input#password(type='text',name='passphrase')
     label
       input(type="checkbox",name="authenticate",checked)
       | Log into my new account when I submit this form

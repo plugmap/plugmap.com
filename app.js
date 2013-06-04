@@ -216,28 +216,33 @@ module.exports = function(db) {
       function(err,tokenDoc){
         if (err) return next(err);
         if (tokenDoc) {
-          //TODO: make sure usernames don't collide
-          tokens.remove({_id:req.params.token}, function(err,remresult){
-            if (err) return next(err);
-            bcrypt.genSalt(10, function(err, salt) {
+          //if this registration used a valid passphrase
+          if (!process.env.REGISTRATION_SECRET_PHRASE ||
+            req.body.passphrase == process.env.REGISTRATION_SECRET_PHRASE) {
+
+            //TODO: make sure usernames don't collide
+            tokens.remove({_id:req.params.token}, function(err,remresult){
               if (err) return next(err);
-              bcrypt.hash(req.body.password, salt, function(err, hash) {
+              bcrypt.genSalt(10, function(err, salt) {
                 if (err) return next(err);
-                users.insert({
-                  username: req.body.username,
-                  unLower: req.body.username.toLowerCase(),
-                  email: tokenDoc.email,
-                  passhash: req.body.password ? hash : impossibleHash
-                }, function (err,inserted) {
+                bcrypt.hash(req.body.password, salt, function(err, hash) {
                   if (err) return next(err);
-                  if (req.body.authenticate) {
-                    authenticateUser(inserted[0],req,res);
-                  }
-                  return res.redirect('/');
-                }); //users.insert
-              }); //bcrypt.hash
-            }); //bcrypt.genSalt
-          }); //tokens.remove
+                  users.insert({
+                    username: req.body.username,
+                    unLower: req.body.username.toLowerCase(),
+                    email: tokenDoc.email,
+                    passhash: req.body.password ? hash : impossibleHash
+                  }, function (err,inserted) {
+                    if (err) return next(err);
+                    if (req.body.authenticate) {
+                      authenticateUser(inserted[0],req,res);
+                    }
+                    return res.redirect('/');
+                  }); //users.insert
+                }); //bcrypt.hash
+              }); //bcrypt.genSalt
+            }); //tokens.remove
+          } // if passphrase
         } else {
           // NOTE: Bad POSTs should probably get a different error
           // (something that doesn't suggest that the URL might have been
@@ -250,7 +255,7 @@ module.exports = function(db) {
       }); //tokens.findOne
   });
   app.get('/plug/:id', function(req,res,next){
-    plugs.findOne({ _id: new ObjectID(req.params.id) }, function(err, plug){
+    plugs.findOne({ _id: new ObjectID(req.params.id)}, function(err, plug){
       if(err) return next(err);
       if(plug) {
         res.render('plug.jade', {plug:plug.properties});
@@ -275,7 +280,7 @@ module.exports = function(db) {
   //The widths to get images for.
   var generateTargetWidths = [360,720,1080];
 
-  app.post('/submit', function(req,res,next){
+  app.post('/submit', function(req,res,next) {
     if(req.session.currentUser) {
 
       var plugDoc = {
