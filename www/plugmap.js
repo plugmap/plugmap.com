@@ -2,7 +2,7 @@
 
 "use strict";
 
-var plugicon = L.icon({iconUrl:'happy-plug-icon.svg',
+var plugicon = L.icon({iconUrl:'/happy-plug-icon.svg',
   iconSize: [29.25,29.25]});
 
 var map = L.map('map')
