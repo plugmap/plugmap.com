@@ -229,6 +229,7 @@ module.exports = function(db) {
                   if (err) return next(err);
                   users.insert({
                     username: req.body.username,
+                    displayname: req.body.displayname,
                     unLower: req.body.username.toLowerCase(),
                     email: tokenDoc.email,
                     passhash: req.body.password ? hash : impossibleHash
