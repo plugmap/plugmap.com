@@ -123,8 +123,8 @@ module.exports = function(db) {
   var impossibleHash =
     '$2a$10$00000000000000000000000000000000000000000000000000000';
 
-  app.get('/login', function(req,res){
-      res.render('login.jade');
+  app.get('/about', function(req,res){
+      res.render('about.jade');
   });
   app.get('/login', function(req,res){
     res.render('login.jade');
