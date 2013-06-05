@@ -223,6 +223,7 @@ module.exports = function(db) {
           tokens.remove({_id:req.params.token}, function(err,remresult){
             if (err) return next(err);
             authenticateUser(tokenDoc.user,req,res);
+            res.redirect('/');
           }); //tokens.remove
         } else {
           // NOTE: Bad POSTs should probably get a different error
