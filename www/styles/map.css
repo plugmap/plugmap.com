@@ -16,11 +16,11 @@
 .popup-image {
   width: 180px;
 }
-.plug-cluster {
+.plug-icon {
   background-image:url('/happy-plug-icon.svg');
   background-repeat: no-repeat;
 }
-.plug-cluster .count {
+.plug-icon .count {
   position: relative;
   top: 50%; left: 75%;
   border-radius: 1em;

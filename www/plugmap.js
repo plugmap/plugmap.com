@@ -2,8 +2,7 @@
 
 "use strict";
 
-var plugicon = L.icon({iconUrl:'/happy-plug-icon.svg',
-  iconSize: [29.25,29.25]});
+var plugicon = L.divIcon({ className: 'plug-icon', iconSize: [29.25,29.25]});
 
 var map = L.map('map')
   .setView([47.61118157075462, -122.33769352761296], 16)
@@ -41,7 +40,7 @@ var markers = new L.MarkerClusterGroup({
   spiderfyDistanceMultiplier: 1.5,
 
   iconCreateFunction: function(cluster) {
-      return new L.DivIcon({ className: 'plug-cluster', iconSize: [29.25,29.25],
+      return L.divIcon({ className: 'plug-icon', iconSize: [29.25,29.25],
         html: '<span class="count">' + cluster.getChildCount() + '</span>' });
   }
 });
