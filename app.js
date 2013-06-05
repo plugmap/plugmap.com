@@ -222,7 +222,7 @@ module.exports = function(db) {
           //TODO: make sure usernames don't collide
           tokens.remove({_id:req.params.token}, function(err,remresult){
             if (err) return next(err);
-            authenticateUser(tokenDoc.user);
+            authenticateUser(tokenDoc.user,req,res);
           }); //tokens.remove
         } else {
           // NOTE: Bad POSTs should probably get a different error
