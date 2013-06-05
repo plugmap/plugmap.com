@@ -151,6 +151,90 @@ module.exports = function(db) {
       });
     });
   }); // POST /login
+  app.post('/login/token', function(req,res,next) {
+    //NOTE: this should be token-request-limited
+    users.findOne({$or:[{unLower: req.body.username.toLowerCase()},
+      {email: req.body.username.toLowerCase()}]},
+      function(err, user) {
+
+      if (err) return next(err);
+      // Submit token
+      if(user) {
+        randomEmailToken(function(err, token){
+          if (err) return next(err);
+          //TODO: set tokens to expire
+          tokens.insert({_id:token, type:'login',
+            user: {
+              _id: user._id,
+              username: user.username,
+              email: user.email
+            }
+          },
+          function(err, inserted){
+            if (err) return next(err);
+            smtpTransport.sendMail({
+              to: user.email,
+              from: 'tokens@plugmap.com',
+              subject: 'PlugMap login token',
+              text: 'To log in to your account, go to http://plugmap.com/login/token/' + token
+               + ' and press the button.\n\n'
+               + "This token will expire in three days. "
+               + "If you did not request this link, you can just "
+               + "delete this email."
+            }, function(mailError, response){
+              if (mailError){
+                tokens.remove({_id:token}, function(err,remresult){
+                  if (err) return next(err);
+                  //TODO: Nicer mail error handling
+                  else next(mailError);
+                });
+              } else {
+                res.render('login-tokeninform.jade');
+              }
+            }); //sendMail
+          }); //tokens.insert
+        }); //randomEmailToken
+      } else { //if not user
+        //TODO: fake lag for timing symmetry
+        res.render('login-tokeninform.jade');
+      }
+    }); //users.findOne
+  }); // POST /login/token
+  app.get('/login/token/:token', function(req,res,next){
+    tokens.findOne({_id: req.params.token, type:'login'},
+      function(err,tokenDoc){
+        if (err) return next(err);
+        if (tokenDoc) {
+          res.render('login-tokenfinalize.jade',{user:tokenDoc.user});
+        } else {
+          res.render('bad-token.jade',function(err,html){
+            if (err) return next(err);
+            res.send(404,html);
+          });
+        }
+      }); //tokens.findOne
+  });
+  app.post('/login/token/:token', function(req,res,next){
+    tokens.findOne({_id: req.params.token, type:'login'},
+      function(err,tokenDoc){
+        if (err) return next(err);
+        if (tokenDoc) {
+          //TODO: make sure usernames don't collide
+          tokens.remove({_id:req.params.token}, function(err,remresult){
+            if (err) return next(err);
+            authenticateUser(tokenDoc.user);
+          }); //tokens.remove
+        } else {
+          // NOTE: Bad POSTs should probably get a different error
+          // (something that doesn't suggest that the URL might have been
+          // entered wrong)
+          res.render('bad-token.jade',function(err,html){
+            if (err) return next(err);
+            res.send(404,html);
+          });
+        }
+      }); //tokens.findOne
+  }); //login/token/:token
   app.get('/logout', function(req,res){
     return res.render('logout.jade');
   });
