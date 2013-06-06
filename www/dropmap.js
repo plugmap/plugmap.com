@@ -22,7 +22,15 @@ var dropmap = L.map('dropmap')
       maxZoom: 19,
     }));
 
-  dropmap.attributionControl.setPrefix('<a href="/about">About</a>');
+dropmap.attributionControl.setPrefix('<a href="/about">About</a>');
+
+dropmap.on('click',function(evt){
+  seal = false;
+  var pos = evt.latlng;
+  mrkr.setLatLng([pos.lat, pos.lng]);
+  pluglong.value = pos.lng;
+  pluglat.value = pos.lat;
+});
 
 var mrkr = L.marker(
   [47.61118157075462, -122.33769352761296],
