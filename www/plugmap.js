@@ -76,7 +76,7 @@ function addPlugMarker(plug){
   mrkr.bindPopup(plugInfo(plug),{
     closeButton: false,
     maxWidth: 179, //workaround for bug in Leaflet width calculation
-    offset: [0,0]});
+    offset: L.point(0,0)});
   mrkr.addTo(markers);
 }
 
