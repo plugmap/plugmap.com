@@ -11,7 +11,7 @@ var pluglat = document.getElementById('pluglat');
 var seal = true;
 var youAreHere = null;
 
-var dropmap = L.map('dropmap')
+var dropmap = L.map('dropmap',{doubleClickZoom: false})
   .setView([47.61118157075462, -122.33769352761296], 16)
   .addLayer(L.tileLayer(
     'http://{s}.tiles.mapbox.com/v3/{username}.{map}/{z}/{x}/{y}.png',
@@ -23,6 +23,14 @@ var dropmap = L.map('dropmap')
     }));
 
 dropmap.attributionControl.setPrefix('<a href="/about">About</a>');
+
+dropmap.on('click',function(evt){
+  seal = false;
+  var pos = evt.latlng;
+  mrkr.setLatLng([pos.lat, pos.lng]);
+  pluglong.value = pos.lng;
+  pluglat.value = pos.lat;
+});
 
 var mrkr = L.marker(
   [47.61118157075462, -122.33769352761296],
