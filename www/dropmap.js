@@ -31,8 +31,10 @@ var mrkr = L.marker(
     draggable: true
   });
 
-mrkr.on('dragend',function(evt){
+mrkr.on('dragstart',function(evt){
   seal = false;
+});
+mrkr.on('dragend',function(evt){
   var ll = mrkr.getLatLng();
   pluglong.value = ll.lng;
   pluglat.value = ll.lat;
