@@ -7,3 +7,11 @@ main {
 .controls {
   margin: 2rem;
 }
+.required-image:invalid:after {
+  content:'(Required)';
+  color: red;
+}
+.required-image:valid:after {
+  content:'Uploaded!';
+  color: green;
+}
