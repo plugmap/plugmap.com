@@ -36,17 +36,7 @@ var mrkr = L.marker(
   [47.61118157075462, -122.33769352761296],
   {
     zIndexOffset: 1,
-    draggable: true
   });
-
-mrkr.on('dragstart',function(evt){
-  seal = false;
-});
-mrkr.on('dragend',function(evt){
-  var ll = mrkr.getLatLng();
-  pluglong.value = ll.lng;
-  pluglat.value = ll.lat;
-});
 
 mrkr.addTo(dropmap);
 
