@@ -1,3 +1,9 @@
 #dropmap {
   height: 10rem;
 }
+main {
+  margin: 0;
+}
+.controls {
+  margin: 2rem;
+}
