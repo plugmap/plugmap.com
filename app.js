@@ -302,21 +302,27 @@ module.exports = function(db) {
         if (err) return next(err);
         if (tokenDoc) {
           //if this registration used a valid passphrase
-          if (!process.env.REGISTRATION_SECRET_PHRASE ||
-            req.body.passphrase == process.env.REGISTRATION_SECRET_PHRASE) {
+          if (process.env.REGISTRATION_SECRET_PHRASE &&
+            req.body.passphrase != process.env.REGISTRATION_SECRET_PHRASE) {
 
+            //NOTE: All failure renders should be implemented as redirects
+            //back to req.originalUrl with a querystring parameter
+            //indicative of the failure type
+            res.render('register-finalize.jade',
+              {failure: 'Incorrect secret phrase'});
+          } else if (req.body.username.length > 15) {
+            res.render('register-finalize.jade',
+              {failure: 'Username too long'});
+          } else if (!/^[a-zA-Z0-9_]+$/.test(req.body.username)) {
+            res.render('register-finalize.jade',
+              {failure: 'Alphanumerics and underscores only'});
+          } else {
             users.findOne({unLower: req.body.username.toLowerCase()},
               function(err,userExists){
 
               if (userExists) {
                 res.render('register-finalize.jade',
                   {failure: 'Username is taken'});
-              } else if (req.body.username.length > 15) {
-                res.render('register-finalize.jade',
-                  {failure: 'Username too long'});
-              } else if (!/^[a-zA-Z0-9_]+$/.test(req.body.username)) {
-                res.render('register-finalize.jade',
-                  {failure: 'Alphanumerics and underscores only'});
               } else {
                 tokens.remove({_id:req.params.token}, function(err,remresult){
                   if (err) return next(err);
@@ -342,9 +348,6 @@ module.exports = function(db) {
                 }); //tokens.remove
               }
             }); //users.findOne
-          } else { // if passphrase is incorrect
-            //TODO: should include an error qs parameter
-            res.redirect(req.originalUrl);
           }
         } else {
           // NOTE: Bad POSTs should probably get a different error
