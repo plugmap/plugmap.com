@@ -310,13 +310,13 @@ module.exports = function(db) {
 
               if (userExists) {
                 res.render('register-finalize.jade',
-                  {message: 'Username is taken'});
+                  {failure: 'Username is taken'});
               } else if (req.body.username.length > 15) {
                 res.render('register-finalize.jade',
-                  {message: 'Username too long'});
+                  {failure: 'Username too long'});
               } else if (!req.body.username.match(/^[a-zA-Z0-9_]$/)) {
                 res.render('register-finalize.jade',
-                  {message: 'Alphanumerics and underscores only'});
+                  {failure: 'Alphanumerics and underscores only'});
               } else {
                 tokens.remove({_id:req.params.token}, function(err,remresult){
                   if (err) return next(err);
