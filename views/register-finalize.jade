@@ -1,5 +1,8 @@
 extends layout
 
+append styles
+  link(href='/styles/register.css',rel='stylesheet')
+
 block content
   if typeof failure != 'undefined' && failure
     .report-failure= failure
