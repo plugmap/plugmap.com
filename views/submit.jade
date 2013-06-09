@@ -15,17 +15,22 @@ block content
   form(method='post').controls
     input(type='hidden',name='_csrf',value=csrfToken)
     input(type='hidden',name='from',value='websubmit/0.1')
-    p: label Longitude:
-      input(type='number',step='any',name='longitude',value='-122.33769352761296')#pluglong
-    p: label Latitude:
-      input(type='number',step='any',name='latitude',value='47.61118157075462')#pluglat
-    p: input(type="filepicker", name='plugimage', accept="image/*", required,
+    p Tap the map above to place.
+    p
+      label Longitude:
+        input(type='number',step='any',name='longitude',value='-122.33769352761296')#pluglong
+      =' '
+      label Latitude:
+        input(type='number',step='any',name='latitude',value='47.61118157075462')#pluglat
+    p
+      input(type="filepicker", name='plugimage', accept="image/*", required,
         data-fp-mimetype="image/*", data-fp-button-text='Pick plug image').required-image
+      | (Required)
     p: label Venue:
-      input(type='text',name='venue')
-    p: label Name:
-      input(type='text',name='name')
+      input(type='text',name='venue',placeholder='eg. Starbucks',required)
+    p: label Name / Spot:
+      input(type='text',name='name',placeholder='eg. Under the long table',required)
     p: label Number of sockets:
-      input(type='number',name='sockets',value=2)
+      input(type='number',name='sockets',value=2,required)
     p: input(type='submit')
     script(src='/dropmap.js')
