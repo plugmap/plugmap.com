@@ -305,29 +305,43 @@ module.exports = function(db) {
           if (!process.env.REGISTRATION_SECRET_PHRASE ||
             req.body.passphrase == process.env.REGISTRATION_SECRET_PHRASE) {
 
-            //TODO: make sure usernames don't collide
-            tokens.remove({_id:req.params.token}, function(err,remresult){
-              if (err) return next(err);
-              bcrypt.genSalt(10, function(err, salt) {
-                if (err) return next(err);
-                bcrypt.hash(req.body.password, salt, function(err, hash) {
+            users.findOne({unLower: req.body.username.toLowerCase()},
+              function(err,userExists){
+
+              if (userExists) {
+                res.render('register-finalize.jade',
+                  {message: 'Username is taken'});
+              } else if (req.body.username.length > 15) {
+                res.render('register-finalize.jade',
+                  {message: 'Username too long'});
+              } else if (!req.body.username.match(/^[a-zA-Z0-9_]$/)) {
+                res.render('register-finalize.jade',
+                  {message: 'Alphanumerics and underscores only'});
+              } else {
+                tokens.remove({_id:req.params.token}, function(err,remresult){
                   if (err) return next(err);
-                  users.insert({
-                    username: req.body.username,
-                    displayname: req.body.displayname,
-                    unLower: req.body.username.toLowerCase(),
-                    email: tokenDoc.email,
-                    passhash: req.body.password ? hash : impossibleHash
-                  }, function (err,inserted) {
+                  bcrypt.genSalt(10, function(err, salt) {
                     if (err) return next(err);
-                    if (req.body.authenticate) {
-                      authenticateUser(inserted[0],req,res);
-                    }
-                    return res.redirect('/');
-                  }); //users.insert
-                }); //bcrypt.hash
-              }); //bcrypt.genSalt
-            }); //tokens.remove
+                    bcrypt.hash(req.body.password, salt, function(err, hash) {
+                      if (err) return next(err);
+                      users.insert({
+                        username: req.body.username,
+                        displayname: req.body.displayname,
+                        unLower: req.body.username.toLowerCase(),
+                        email: tokenDoc.email,
+                        passhash: req.body.password ? hash : impossibleHash
+                      }, function (err,inserted) {
+                        if (err) return next(err);
+                        if (req.body.authenticate) {
+                          authenticateUser(inserted[0],req,res);
+                        }
+                        return res.redirect('/');
+                      }); //users.insert
+                    }); //bcrypt.hash
+                  }); //bcrypt.genSalt
+                }); //tokens.remove
+              }
+            }); //users.findOne
           } else { // if passphrase is incorrect
             //TODO: should include an error qs parameter
             res.redirect(req.originalUrl);

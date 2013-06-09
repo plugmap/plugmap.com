@@ -1,10 +1,12 @@
 extends layout
 
 block content
+  if typeof failure != 'undefined' && failure
+    .report-failure= failure
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
     p Enter your desired username:
-    input(type='text',name='username')
+    input(type='text',name='username',maxlength='15',pattern='[A-Za-z0-9_]')
     p Enter a full name for your profile:
     input(type='text',name='displayname',placeholder='eg. Stuart P. Bentley')
     p Enter your desired password:
