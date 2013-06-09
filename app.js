@@ -314,7 +314,7 @@ module.exports = function(db) {
               } else if (req.body.username.length > 15) {
                 res.render('register-finalize.jade',
                   {failure: 'Username too long'});
-              } else if (!req.body.username.match(/^[a-zA-Z0-9_]$/)) {
+              } else if (!/^[a-zA-Z0-9_]+$/.test(req.body.username)) {
                 res.render('register-finalize.jade',
                   {failure: 'Alphanumerics and underscores only'});
               } else {
