@@ -18,10 +18,10 @@ block content
     p Tap the map above to place.
     p
       label Longitude:
-        input(type='number',step='any',name='longitude',value='-122.33769352761296')#pluglong
+        input(type='number',step='any',name='longitude',required)#pluglong
       =' '
       label Latitude:
-        input(type='number',step='any',name='latitude',value='47.61118157075462')#pluglat
+        input(type='number',step='any',name='latitude',required)#pluglat
     p
       input(type="filepicker", name='plugimage', accept="image/*", required,
         data-fp-mimetype="image/*", data-fp-button-text='Pick plug image').required-image

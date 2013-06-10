@@ -8,8 +8,8 @@ filepicker.setKey('AsgVwvIYmRdmv5DsVcXeFz');
 // set up Leaflet stuff
 var pluglong = document.getElementById('pluglong');
 var pluglat = document.getElementById('pluglat');
-var seal = true;
 var youAreHere = null;
+var pin = null;
 
 var dropmap = L.map('dropmap',{doubleClickZoom: false})
   .setView([47.61118157075462, -122.33769352761296], 16)
@@ -25,20 +25,16 @@ var dropmap = L.map('dropmap',{doubleClickZoom: false})
 dropmap.attributionControl.setPrefix('<a href="/about">About</a>');
 
 dropmap.on('click',function(evt){
-  seal = false;
   var pos = evt.latlng;
-  mrkr.setLatLng([pos.lat, pos.lng]);
+  if(!pin){
+    pin = L.marker([pos.lat, pos.lng], {zIndexOffset: 1});
+    pin.addTo(dropmap);
+  } else {
+    pin.setLatLng([pos.lat, pos.lng]);
+  }
   pluglong.value = pos.lng;
   pluglat.value = pos.lat;
 });
-
-var mrkr = L.marker(
-  [47.61118157075462, -122.33769352761296],
-  {
-    zIndexOffset: 1,
-  });
-
-mrkr.addTo(dropmap);
 
 if(navigator.geolocation) {
   navigator.geolocation.watchPosition(function(geo){
@@ -53,10 +49,7 @@ if(navigator.geolocation) {
       youAreHere.setRadius(pos.accuracy);
     }
 
-    if(seal){
-      mrkr.setLatLng([pos.latitude, pos.longitude]);
-      pluglong.value = pos.longitude;
-      pluglat.value = pos.latitude;
+    if(!pin){
       dropmap.panTo([pos.latitude, pos.longitude]);
     }
   }, null, {enableHighAccuracy: true});

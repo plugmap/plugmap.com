@@ -18,7 +18,11 @@ block content
     p(style='background-color: #ffa')#passwarn Using an empty password will make your account email-login-token-only
     p Registration is currently limited to those who know the secret phrase:
     input#password(type='text',name='passphrase')
-    label
+    p: label
+      input(type="checkbox",name="subscribe",checked)
+      | It's OK to email me about big important PlugMap changes.
+    p You can also keep up with PlugMap news by <a href="https://twitter.com/PlugMap">following @PlugMap on Twitter</a>.
+    p: label
       input(type="checkbox",name="authenticate",checked)
       | Log into my new account when I submit this form
     input(type='submit')
