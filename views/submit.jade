@@ -16,13 +16,9 @@ block content
   form(method='post').controls
     input(type='hidden',name='_csrf',value=csrfToken)
     input(type='hidden',name='from',value='websubmit/0.1')
+    input(type='hidden',step='any',name='longitude',required)#pluglong
+    input(type='hidden',step='any',name='latitude',required)#pluglat
     p Tap the map above to set the plug's location
-    p
-      label Longitude:
-        input(type='number',step='any',name='longitude',required)#pluglong
-      =' '
-      label Latitude:
-        input(type='number',step='any',name='latitude',required)#pluglat
     p
       input(type="filepicker", name='plugimage', accept="image/*", required,
         data-fp-mimetype="image/*", data-fp-button-text='Pick plug image').required-image
