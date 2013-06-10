@@ -14,11 +14,13 @@ block content
     .report-failure= failure
   form(method='post')
     input(type='hidden',name='_csrf',value=csrfToken)
-    p Username / Email:
+    p: label
+      ="Username / Email: "
       input(type='text',name='username',required)
     p
       input(type='submit',formaction='/login/token', value='Login via e-mail token')
       =" or"
-    p Password:
+    p: label
+      ="Password: "
       input(type='password',name='password')
       input(type='submit', value='Log in via password')
