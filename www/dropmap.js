@@ -12,7 +12,6 @@ var youAreHere = null;
 var pin = null;
 
 var dropmap = L.map('dropmap',{doubleClickZoom: false})
-  .setView([47.61118157075462, -122.33769352761296], 16)
   .addLayer(L.tileLayer(
     'http://{s}.tiles.mapbox.com/v3/{username}.{map}/{z}/{x}/{y}.png',
     { subdomains: 'abcd',
@@ -21,6 +20,10 @@ var dropmap = L.map('dropmap',{doubleClickZoom: false})
       detectRetina: true,
       maxZoom: 19,
     }));
+
+if (!dropmap.restoreView()) {
+  dropmap.setView([47.61118157075462, -122.33769352761296], 16);
+}
 
 dropmap.attributionControl.setPrefix('<a href="/about">About</a>');
 

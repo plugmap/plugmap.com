@@ -5,7 +5,6 @@
 var plugicon = L.divIcon({ className: 'plug-icon', iconSize: [29.25,29.25]});
 
 var map = L.map('map')
-  .setView([47.61118157075462, -122.33769352761296], 16)
   .addLayer(L.tileLayer(
     'http://{s}.tiles.mapbox.com/v3/{username}.{map}/{z}/{x}/{y}.png',
     { subdomains: 'abcd',
@@ -15,7 +14,11 @@ var map = L.map('map')
       maxZoom: 19,
     }));
 
-  map.attributionControl.setPrefix('<a href="/about">About</a>');
+if (!map.restoreView()) {
+  map.setView([47.61118157075462, -122.33769352761296], 16);
+}
+
+map.attributionControl.setPrefix('<a href="/about">About</a>');
 
 function getPlugs(cb) {
   var req = new XMLHttpRequest();
