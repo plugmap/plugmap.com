@@ -17,10 +17,10 @@ block content
     p: label
       ="Username / Email: "
       input(type='text',name='username',required)
-    p
-      input(type='submit',formaction='/login/token', value='Login via e-mail token')
-      =" or"
     p: label
       ="Password: "
       input(type='password',name='password')
       input(type='submit', value='Log in via password')
+    p
+      ="or "
+      input(type='submit',formaction='/login/token', value='Login via e-mail token')
