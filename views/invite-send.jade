@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  p Enter the email address of the person you want to invite:
+  form(method='post')
+    input(type='hidden',name='_csrf',value=csrfToken)
+    input(type='email',name='email')
+    input(type='submit')
+  p They will be e-mailed with a link to create their account.

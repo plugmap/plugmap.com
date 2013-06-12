@@ -243,44 +243,57 @@ module.exports = function(db) {
     unAuthenticateUser(req,res);
     return res.redirect('/');
   }); // POST /login
-  app.get('/register', function(req, res){
-    return res.render('register-request.jade');
+  app.get('/invite', function(req, res){
+    if(req.session.currentUser)
+      return res.render('invite-send.jade');
+    else
+      return res.render('invite-request.jade');
   });
-  app.post('/register', function(req, res, next) {
-    //TODO: validate email address
-    var email = req.body.email.toLowerCase();
-    //TODO: check email address hasn't already registered (or made too many
-    // requests for this email)
-    randomEmailToken(function(err, token){
-      if (err) return next(err);
-      //TODO: set tokens to expire
-      tokens.insert({_id:token, type:'register',
-        email: email},
-      function(err, inserted){
+  app.post('/invite', function(req, res, next) {
+    var email = req.body.email;
+    if(email) email = email.toLowerCase().trim();
+    if(!email)
+      return next(new Error('No email address'));
+    else if(!/^[^\s@]+@[^\s@]+$/.test(email))
+      return next(new Error('Not an email address: ' + email));
+
+    if(req.session.currentUser) {
+      //TODO: check email address hasn't already registered (or made too many
+      // requests for this email)
+      randomEmailToken(function(err, token){
         if (err) return next(err);
-        smtpTransport.sendMail({
-          to: email,
-          from: 'tokens@plugmap.com',
-          subject: 'PlugMap user registration link',
-          text: 'To register an account on plugmap.com with this email '
-           + 'address, go to http://plugmap.com/register/token/' + token
-           + ' and fill out the registration form.\n\n'
-           + "This token will expire in three days. "
-           + "If you did not request this link, you can just "
-           + "delete this email."
-        }, function(mailError, response){
-          if (mailError){
-            tokens.remove({_id:token}, function(err,remresult){
-              if (err) return next(err);
-              //TODO: Nicer mail error handling
-              else next(mailError);
-            });
-          } else {
-            res.render('register-inform.jade');
-          }
-        }); //sendMail
-      }); //tokens.insert
-    }); //randomEmailToken
+        //TODO: set tokens to expire
+        tokens.insert({_id:token, type:'register',
+          email: email, invitedBy: req.session.currentUser._id},
+        function(err, inserted){
+          if (err) return next(err);
+          smtpTransport.sendMail({
+            to: email,
+            from: 'tokens@plugmap.com',
+            subject: 'PlugMap user registration link',
+            text: 'To register an account on plugmap.com with this email '
+             + 'address, go to http://plugmap.com/register/token/' + token
+             + ' and fill out the registration form.\n\n'
+             + "This token will expire in three days. "
+             + "If you did not request this link, you can just "
+             + "delete this email."
+          }, function(mailError, response){
+            if (mailError){
+              tokens.remove({_id:token}, function(err,remresult){
+                if (err) return next(err);
+                //TODO: Nicer mail error handling
+                else next(mailError);
+              });
+            } else {
+              //TODO: debit invite from inviter's account
+              res.render('invite-inform.jade');
+            }
+          }); //sendMail
+        }); //tokens.insert
+      }); //randomEmailToken
+    } else {
+      res.render('bad-session.jade');
+    }
   }); // POST /register
   app.get('/register/token/:token', function(req,res,next){
     tokens.findOne({_id: req.params.token, type:'register'},
@@ -330,13 +343,16 @@ module.exports = function(db) {
                     if (err) return next(err);
                     bcrypt.hash(req.body.password, salt, function(err, hash) {
                       if (err) return next(err);
-                      users.insert({
+                      var newUserDoc = {
                         username: req.body.username,
                         displayname: req.body.displayname,
                         unLower: req.body.username.toLowerCase(),
                         email: tokenDoc.email,
                         passhash: req.body.password ? hash : impossibleHash
-                      }, function (err,inserted) {
+                      };
+                      if (tokenDoc.invitedBy)
+                        newUserDoc.invitedBy = tokenDoc.invitedBy;
+                      users.insert(newUserDoc, function (err,inserted) {
                         if (err) return next(err);
                         if (req.body.authenticate) {
                           authenticateUser(inserted[0],req,res);
@@ -346,7 +362,7 @@ module.exports = function(db) {
                     }); //bcrypt.hash
                   }); //bcrypt.genSalt
                 }); //tokens.remove
-              }
+              } // if (userExists) else
             }); //users.findOne
           }
         } else {
@@ -457,8 +473,7 @@ module.exports = function(db) {
         res.redirect('/plug/'+inserted[0]._id);
         });
     } else {
-      //TODO: render "Your session appears to have timed out or something"
-      res.render('stub.jade');
+      res.render('bad-session.jade');
     }
 
   });
