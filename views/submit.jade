@@ -25,10 +25,10 @@ block content
       | (Required)
     p: label Venue:
       input(type='text',name='venue',placeholder='eg. Starbucks',required,
-        pattern=".*\S.*",title="Must include one non-whitespace character")
+        pattern=".*\\S.*",title="Must include one non-whitespace character")
     p: label Name / Spot:
       input(type='text',name='name',placeholder='eg. Under the long table',required,
-        pattern=".*\S.*",title="Must include one non-whitespace character")
+        pattern=".*\\S.*",title="Must include one non-whitespace character")
     p: label Number of sockets:
       input(type='number',name='sockets',value=2,required)
     p: input(type='submit')
