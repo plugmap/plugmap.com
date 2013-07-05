@@ -70,7 +70,7 @@ function plugInfo(plug){
     + '<a class="popup-ownerlink" href="/user/' + props.owner.username
     + '"><img class="popup-owneravatar" src="//gravatar.com/avatar/'
     + props.owner.emailMD5 + '?s=44?" alt="mapped by ' + props.owner.username
-    + '"></a></div>';
+    + '"></a></div></a>';
 }
 
 function addPlugMarker(plug){
