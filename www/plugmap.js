@@ -65,12 +65,12 @@ function plugInfo(plug){
     + '<img class="popup-image" src="' + props.images[360] + '">'
     + '<h2 class="popup-venuename">' + htContent(props.venue) + '</h2>'
     + '<h3 class="popup-plugname">' + htContent(props.name) + '</h3>'
-    + '<div class="popup-top">'
+    + '<span class="popup-top">'
     + '<span class="popup-upvolt-count"><img src="/upvolt.svg"> 0</span> '
     + '<a class="popup-ownerlink" href="/user/' + props.owner.username
     + '"><img class="popup-owneravatar" src="//gravatar.com/avatar/'
     + props.owner.emailMD5 + '?s=44?" alt="mapped by ' + props.owner.username
-    + '"></a></div></a>';
+    + '"></a></span></a>';
 }
 
 function addPlugMarker(plug){
