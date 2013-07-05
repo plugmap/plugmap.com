@@ -33,17 +33,21 @@
 }
 .popup-venuename, .popup-plugname, .popup-upvolt-count {
   color: white;
+  height: 1.2em;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
+}
+
+.popup-venuename, .popup-plugname {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  height: 1.2em;
   width: 100%;
   padding: 0 4px;
   box-sizing: border-box;
   margin: 0;
   position: absolute;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
 }
+
 .popup-venuename {
   bottom: 2px;
 }
