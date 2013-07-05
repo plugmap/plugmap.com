@@ -56,8 +56,17 @@
   margin: 0;
   position: absolute;
   top: 4px;
-  right:0;
+  right: 0;
+  left: 0;
   text-align: right;
+}
+
+.popup-upvolt-count {
+
+}
+
+.popup-upvolt-icon {
+  height: 1em;
 }
 
 .popup-owneravatar {
