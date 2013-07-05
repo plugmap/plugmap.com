@@ -65,7 +65,7 @@ function plugInfo(plug){
     + '<img class="popup-image" src="' + props.images[360] + '">'
     + '<h2 class="popup-venuename">' + htContent(props.venue) + '</h2>'
     + '<h3 class="popup-plugname">' + htContent(props.name) + '</h3>'
-    + '<a class="popup-ownerlink" href="/users/' + props.owner.username
+    + '<a class="popup-ownerlink" href="/user/' + props.owner.username
     + '"><img class="popup-owneravatar" src="//gravatar.com/avatar/'
     + props.owner.emailMD5 + '?s=44?" alt="mapped by ' + props.owner.username
     + '"></a>';
