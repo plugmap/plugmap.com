@@ -2,7 +2,7 @@
 
 "use strict";
 
-var plugicon = L.divIcon({ className: 'plug-icon', iconSize: [29.25,29.25]});
+var plugicon = L.divIcon({ className: 'plug-icon', iconSize: [32,32]});
 
 var map = L.map('map')
   .addLayer(L.tileLayer(
@@ -46,7 +46,7 @@ var markers = new L.MarkerClusterGroup({
   spiderfyDistanceMultiplier: 1.5,
 
   iconCreateFunction: function(cluster) {
-      return L.divIcon({ className: 'plug-icon', iconSize: [29.25,29.25],
+      return L.divIcon({ className: 'plug-icon', iconSize: [32,32],
         html: '<span class="count">' + cluster.getChildCount() + '</span>' });
   }
 });

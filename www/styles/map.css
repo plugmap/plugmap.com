@@ -20,6 +20,7 @@
 .plug-icon {
   background-image:url('/happy-plug-icon.svg');
   background-repeat: no-repeat;
+  background-position: center;
 }
 .plug-icon .count {
   position: relative;

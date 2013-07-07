@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -101,9 +101,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="16.970563"
-     inkscape:cx="25.491288"
-     inkscape:cy="14.883265"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="29.59324"
+     inkscape:cy="31.780557"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -117,6 +117,8 @@
      id="path2991" />
   <path
      style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:url(#radialGradient3813);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-     d="M 7.15625 3.25 C 3.4808971 5.9851831 1.09375 10.284741 1.09375 15.21875 C 1.09375 21.033686 4.4177976 26.103168 9.25 28.59375 L 22.90625 28.59375 C 27.738452 26.103168 31.09375 21.033686 31.09375 15.21875 C 31.09375 10.284741 28.675353 5.9851831 25 3.25 L 7.15625 3.25 z M 9 9 L 11 9 L 11 17 L 9 17 L 9 9 z M 22 10 L 24 10 L 24 16 L 22 16 L 22 10 z M 14 21 L 19 21 L 19 23.5 A 2.5 2.5 0 0 1 14 23.5 L 14 21 z "
-     id="path3805" />
+     d="M 7.15625,3.25 C 3.4808971,5.9851831 1.09375,10.284741 1.09375,15.21875 1.09375,21.033686 4.4177976,26.103168 9.25,28.59375 L 22.90625,28.59375 C 27.738452,26.103168 31.09375,21.033686 31.09375,15.21875 31.09375,10.284741 28.675353,5.9851831 25,3.25 z M 9,9 11,9 11,17 9,17 z M 21,10 23,10 23,16 21,16 z M 14,21 19,21 19,23.5 C 19,24.808997 17.808997,25.999999 16.5,25.999999 15.191003,25.999999 14,24.808997 14,23.5 z"
+     id="path3805"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="csccsccccccccccccccsssc" />
 </svg>
