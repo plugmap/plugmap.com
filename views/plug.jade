@@ -18,3 +18,12 @@ block content
         a(href='/user/'+plug.owner.username).ownername
           = plug.owner.username
           img(src='//gravatar.com/avatar/'+plug.owner.emailMD5).owneravatar
+    #upvolt-button(
+      class = (currentUser && ~plug.upvolters.indexOf(currentUser._id)) ?
+        'upvolted' : '')
+      span.icon-upvolt
+      =' '
+      span.upvolt-count= plug.upvolters.length
+      =' Upvolts'
+    if currentUser
+      script(src="upvolt.js")

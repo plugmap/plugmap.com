@@ -67,8 +67,11 @@ function plugInfo(plug){
     + '<h3 class="popup-plugname">' + htContent(props.name) + '</h3>'
     + '</a>'
     + '<div class="popup-top">'
-    + '<a href="/plug/' + plug._id + '" class="popup-upvolt-count">'
-    + '<span class="icon-upvolt popup-upvolt-icon"></span> 0</a></div>'
+    + '<a href="/plug/' + plug._id + '" class="popup-upvolts">'
+    + '<span class="icon-upvolt popup-upvolt-icon"></span> '
+    + '<span class="popup-upvolt-count">'
+    + props.upvolters.length
+    + '</span></a></div>'
     + '<a class="popup-ownerlink" href="/user/' + props.owner.username
     + '"><img class="popup-owneravatar" src="//gravatar.com/avatar/'
     + props.owner.emailMD5 + '?s=44?" alt="mapped by ' + props.owner.username
