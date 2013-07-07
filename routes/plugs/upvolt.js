@@ -20,15 +20,16 @@ module.exports = function(db){
         if(plug) {
           var alreadyUpvolted = !!~plug.properties.upvolters.indexOf(
             req.session.currentUser._id);
+          var newCount = plug.properties.upvolters.length
+            + (alreadyUpvolted?-1:1);
           var op = {'properties.upvolters': req.session.currentUser._id};
           plugs.update({ _id: plugid},
             alreadyUpvolted ? {$pull: op} : {$addToSet: op},
             function(err,doc) {
               if(err) return next(err);
               res.send({message:'OK',
-                upvolts: doc.properties.upvolters.length,
-                upvolted: !!~doc.properties.upvolters.indexOf(
-                  req.session.currentUser._id)});
+                upvolts: newCount,
+                upvolted: !alreadyUpvolted});
           });
         } else {
           res.send(404,{message:'Plug not found'});
