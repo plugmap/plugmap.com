@@ -1,6 +1,9 @@
 #map {
   margin: 0;
 }
+main {
+  bottom:0;
+}
 .leaflet-popup-content {
   margin: 0;
 }
@@ -32,7 +35,7 @@
   padding: .125em .75em;
   text-align: center;
 }
-.popup-venuename, .popup-plugname, a.popup-upvolt-count {
+.popup-venuename, .popup-plugname, a.popup-upvolts {
   color: white;
   height: 1.2em;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
@@ -67,7 +70,7 @@
 }
 
 .popup-upvolts {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .popup-upvolt-count {
