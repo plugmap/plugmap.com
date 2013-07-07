@@ -24,7 +24,7 @@ block content
   #upvolt-button(class = (userUpvolted ? 'upvolted' : ''))
     span.icon-upvolt
     =' '
-    span.upvolt-count= plug.upvolters.length
+    span#upvolt-count= plug.upvolters.length
     =' Upvolts'
   if currentUser
     script var csrfToken = !{JSON.stringify(csrfToken)};
