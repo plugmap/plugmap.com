@@ -101,20 +101,15 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="16.970563"
-     inkscape:cx="25.491288"
-     inkscape:cy="14.883265"
+     inkscape:zoom="11.313708"
+     inkscape:cx="23.307164"
+     inkscape:cy="19.21932"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
      inkscape:showpageshadow="false"
      showborder="false" />
-  <path
-     inkscape:connector-curvature="0"
-     style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-     d="M 6.7008547,2.3247864 6.5641026,2.4273505 C 2.5784983,5.3348737 0,10.004751 0,15.31624 0,21.558536 3.5666498,26.971175 8.7863248,29.606838 L 8.9230769,29.675214 9.0598291,29.675214 22.940171,29.675214 23.042735,29.675214 23.179487,29.606838 C 28.399162,26.971175 32,21.558536 32,15.31624 32,10.004751 29.387313,5.3348737 25.401709,2.4273505 L 25.264957,2.3247864 25.094017,2.3247864 6.9059829,2.3247864 6.7008547,2.3247864 z"
-     id="path2991" />
   <path
      style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:url(#radialGradient3813);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
      d="M 7.15625 3.25 C 3.4808971 5.9851831 1.09375 10.284741 1.09375 15.21875 C 1.09375 21.033686 4.4177976 26.103168 9.25 28.59375 L 22.90625 28.59375 C 27.738452 26.103168 31.09375 21.033686 31.09375 15.21875 C 31.09375 10.284741 28.675353 5.9851831 25 3.25 L 7.15625 3.25 z M 9 9 L 11 9 L 11 17 L 9 17 L 9 9 z M 22 10 L 24 10 L 24 16 L 22 16 L 22 10 z M 14 21 L 19 21 L 19 23.5 A 2.5 2.5 0 0 1 14 23.5 L 14 21 z "

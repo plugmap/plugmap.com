@@ -14,7 +14,7 @@
    id="svg3110"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="New document 3">
+   sodipodi:docname="upvolt-l.svg">
   <defs
      id="defs3112" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6568542"
-     inkscape:cx="53.242984"
-     inkscape:cy="30.298829"
+     inkscape:zoom="4"
+     inkscape:cx="25.345473"
+     inkscape:cy="33.171286"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -64,14 +64,14 @@
      inkscape:groupmode="layer"
      transform="translate(0,16)">
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       style="fill:#cccccc;fill-opacity:1;stroke:none"
        d="m 14,16 3,-12 -6,1 2,-19 8,-2 -4,18 5,-1 z"
        id="path3102"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="M 13,16 16,5 10,6 10.96821,-4.001282 0,-4 c 0,0 0.05303328,2.5295899 0.06079304,3.7945926 C 0.09392829,5.1963314 0,16 0,16 z"
+       style="fill:#cccccc;fill-opacity:1;stroke:none"
+       d="M 12,16 15,6 9,7 10,-4 0,-4 C 0,-4 0.05303328,-1.4704101 0.06079304,-0.2054074 0.09392829,5.1963314 0,16 0,16 z"
        id="path3104"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccscc" />
@@ -79,7 +79,7 @@
        sodipodi:nodetypes="cccccccccc"
        inkscape:connector-curvature="0"
        id="path3106"
-       d="m 32,1 -9,0 -8,15 17,0 z m -2,2 0,11 -6,0 0,-11 z"
-       style="fill:#ffffff;fill-opacity:1;stroke:none" />
+       d="M 32,1 24,1 16,16 32,16 z M 30,3 30,14 26,14 26,3 z"
+       style="fill:#cccccc;fill-opacity:1;stroke:none" />
   </g>
 </svg>
