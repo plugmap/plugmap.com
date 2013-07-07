@@ -1,4 +1,5 @@
 function upvoltPlug(cb) {
+  /*global csrfToken*/
   var req = new XMLHttpRequest();
 
   var target = location.origin
@@ -14,7 +15,8 @@ function upvoltPlug(cb) {
         cb(JSON.parse(req.responseText));
     }
   };
-  req.send(null);
+  req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  req.send('_csrf='+csrfToken);
 }
 
 document.getElementById('upvolt-button').addEventListener('click',

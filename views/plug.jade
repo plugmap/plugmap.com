@@ -27,4 +27,5 @@ block content
       span.upvolt-count= plug.upvolters.length
       =' Upvolts'
     if currentUser
+      script var csrfToken = #{csrfToken};
       script(src="/upvolt.js")
