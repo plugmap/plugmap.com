@@ -32,7 +32,7 @@
   padding: .125em .75em;
   text-align: center;
 }
-.popup-venuename, .popup-plugname, .popup-upvolt-count {
+.popup-venuename, .popup-plugname, a.popup-upvolt-count {
   color: white;
   height: 1.2em;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
@@ -57,21 +57,29 @@
 }
 
 .popup-top {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 4px;
+  right: 30px;
+  left: 4px;
+  text-align: right;
+}
+
+.popup-upvolt-count {
+  font-size: 16px;
+}
+
+.popup-upvolt-icon {
+  height: 1em;
+}
+
+.popup-ownerlink {
   padding: 0 4px;
   margin: 0;
   position: absolute;
   top: 4px;
   right: 0;
-  left: 0;
-  text-align: right;
-}
-
-.popup-upvolt-count {
-
-}
-
-.popup-upvolt-icon {
-  height: 1em;
 }
 
 .popup-owneravatar {
