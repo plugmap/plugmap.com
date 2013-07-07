@@ -44,7 +44,8 @@ main {
 
 #upvolt-button {
   margin: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
   color: #333333;
   text-align: center;
   text-transform: uppercase;
@@ -78,4 +79,8 @@ main {
   background-repeat: repeat-x;
   border-color: #51a351 #51a351 #387038;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+#upvolt-count {
+  font-weight: bold;
 }
