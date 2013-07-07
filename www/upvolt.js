@@ -18,19 +18,21 @@ function upvoltPlug(cb) {
   req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   req.send('_csrf='+csrfToken);
 }
+(function(button, count){
+  button.addEventListener('click',
+    function(evt) {
 
-document.getElementById('upvolt-button').addEventListener('click',
-  function(evt) {
+    upvoltPlug(function(err,result) {
+      if (err) return console.log(err);
 
-  upvoltPlug(function(err,result) {
-    if (err) return console.log(err);
+      count.textContent = result.upvolts;
 
-    evt.target.textContent = result.upvolts + ' Upvolts';
-
-    if (result.upvolted) {
-      evt.target.className = 'upvolted';
-    } else {
-      evt.target.className = '';
-    }
+      if (result.upvolted) {
+        button.className = 'upvolted';
+      } else {
+        button.className = '';
+      }
+    });
   });
-});
+})(document.getElementById('upvolt-button'),
+  document.getElementById('upvolt-count'));
