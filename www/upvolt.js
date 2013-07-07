@@ -2,7 +2,7 @@ function upvoltPlug(cb) {
   var req = new XMLHttpRequest();
 
   var target = location.origin
-    + location.pathname.replace(/\/?$/, '/');
+    + location.pathname.replace(/\/?$/, '/')
     + 'upvolt';
 
   req.open('POST', target, true);

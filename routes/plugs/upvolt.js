@@ -7,14 +7,21 @@ module.exports = function(db){
   var plugs = db.collection('plugs');
 
   app.post('/plug/:id/upvolt', function(req,res,next){
+    var plugid;
+    try {
+      plugid = new ObjectID(req.params.id);
+    } catch(err) {
+      return res.send(404,{message:'Invalid plug ID'});
+    }
+
     if(req.session.currentUser) {
-      plugs.findOne({ _id: new ObjectID(req.params.id)}, function(err, plug) {
+      plugs.findOne({ _id: plugid}, function(err, plug) {
         if(err) return next(err);
         if(plug) {
           var alreadyUpvolted = !!~plug.properties.upvolters.indexOf(
             req.session.currentUser._id);
           var op = {'properties.upvolters': req.session.currentUser._id};
-          plugs.update({ _id: new ObjectID(req.params.id)},
+          plugs.update({ _id: plugid},
             alreadyUpvolted ? {$pull: op} : {$addToSet: op},
             function(err,doc) {
               if(err) return next(err);
