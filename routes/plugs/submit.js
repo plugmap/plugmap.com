@@ -44,7 +44,8 @@ module.exports = function(db,s3client) {
             emailMD5: md5sum(req.session.currentUser.email.toLowerCase()),
             _id: req.session.currentUser._id
           },
-          from: req.body.from
+          from: req.body.from,
+          upvolters: []
         }
       };
 
