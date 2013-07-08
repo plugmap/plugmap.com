@@ -1,6 +1,8 @@
 plugmap.com
 ===========
 
+![PlugMap](https://raw.github.com/stuartpb/plugmap.com/master/www/favicon@16x.png)
+
 A site for finding power outlets.
 
 ## Config variables
