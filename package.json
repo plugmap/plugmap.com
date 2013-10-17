@@ -4,7 +4,7 @@
   "description": "A site for finding power outlets.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "grunt test",
     "start": "node server.js"
   },
   "repository": {
@@ -28,5 +28,9 @@
     "envigor": "~0.3.0",
     "nodemailer": "~0.4.4",
     "queue-async": "~1.0.3"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jsvalidate": "~0.2.1"
   }
 }
