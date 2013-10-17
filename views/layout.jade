@@ -9,8 +9,11 @@ html
         link(href='/styles/ui.css',rel='stylesheet')
         link(href='//fonts.googleapis.com/css?family=Russo+One',rel='stylesheet')
       block scripts
-      meta(name="viewport",
-        content="width=device-width, initial-scale=1, maximum-scale=1")
+      block metatags
+        meta(name="viewport",
+          content="width=device-width, initial-scale=1, maximum-scale=1")
+        meta(name="mobile-web-app-capable",value="yes")
+        meta(name="apple-mobile-web-app-capable",value="yes")
       block favicons
         link(href='/happy-plug-icon.svg',type='image/svg+xml',sizes='any',rel='icon')
         link(href='/favicon@16x.png',type='image/png',sizes='256x256',rel='icon')
