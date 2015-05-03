@@ -12,7 +12,7 @@
     "url": "git://github.com/stuartpb/plugmap.com.git"
   },
   "author": "Stuart P. Bentley",
-  "license": "BSD",
+  "license": "MIT",
   "engines": {
     "node": "0.10.x"
   },
