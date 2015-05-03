@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/stuartpb/plugmap.com.git"
+    "url": "git://github.com/plugmap/plugmap.com.git"
   },
   "author": "Stuart P. Bentley",
   "license": "MIT",
