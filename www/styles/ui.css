@@ -1,6 +1,10 @@
-body { margin:0; padding:0; font-family: sans-serif;}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+}
 main {
-  position:absolute;
+  position: absolute;
   top: 3rem;
   left: 0;
   right: 0;
@@ -93,14 +97,12 @@ img {
 .headpanel {
   position:absolute; right: 0.5rem; top:0.5rem;
 }
-header {position: absolute; top: 0; height: 3rem; width: 100%;
-  background: rgb(201,222,150); /* Old browsers */
-  background: -moz-linear-gradient(top, rgba(201,222,150,1) 0%, rgba(138,182,107,1) 44%, rgba(57,130,53,1) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(201,222,150,1)), color-stop(44%,rgba(138,182,107,1)), color-stop(100%,rgba(57,130,53,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* IE10+ */
-  background: linear-gradient(to bottom, rgba(201,222,150,1) 0%,rgba(138,182,107,1) 44%,rgba(57,130,53,1) 100%); /* W3C */
+header {
+  position: absolute;
+  top: 0;
+  height: 3rem;
+  width: 100%;
+  background: #6b4;
 }
 header h1 {
   margin: 0;
@@ -113,6 +115,10 @@ header h1 {
 h1 a {
   color: inherit;
   text-decoration: none;
+}
+h2, h3 {
+  font-family: Roboto Condensed;
+  font-weight: 700;
 }
 .current-user-avatar {
   height: 30px;
