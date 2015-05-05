@@ -2,10 +2,10 @@
   "name": "plugmap.com",
   "version": "0.1.0",
   "description": "A site for finding power outlets.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "grunt test",
-    "start": "node server.js"
+    "start": "envigorate"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "dependencies": {
     "bcrypt": "~0.7.5",
     "connect-mongo": "~0.3.2",
-    "envigor": "~0.3.0",
+    "envigor": "^0.9.0",
     "express": "~3.2.2",
     "jade": "^1.9.2",
     "knox": "~0.8.0",

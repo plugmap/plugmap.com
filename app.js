@@ -1,11 +1,8 @@
 var express = require("express");
+var mongodb = require("mongodb");
 var MongoStore = require('connect-mongo')(express);
 var nodemailer = require('nodemailer');
 var knox = require('knox');
-var cfg = require("envigor")();
-var mailer = nodemailer.createTransport(
-  "SMTP", cfg.smtp);
-var s3client = knox.createClient(cfg.s3);
 
 var md5sum = require('./lib/md5sum.js');
 
@@ -23,7 +20,19 @@ function populateSessionLocals(req,res,next){
   return next();
 }
 
-module.exports = function(db) {
+module.exports = function(cfg) {
+  var db;
+
+  var mongoUrl = cfg.mongodb.url || 'mongodb://localhost/default';
+
+  mongodb.MongoClient.connect(mongoUrl,function(err,connectedDb){
+    if(err) throw err;
+    else db = connectedDb;
+  });
+
+  var mailer = nodemailer.createTransport("SMTP", cfg.smtp);
+  var s3client = knox.createClient(cfg.s3);
+
   var app = express();
 
   app.set('views',__dirname+'/views');
