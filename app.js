@@ -42,7 +42,7 @@ module.exports = function(cfg) {
   app.use(express.cookieParser());
   app.use(express.session({
     secret: process.env.SESSION_SECRET,
-    store: new MongoStore({db:db})}));
+    store: new MongoStore({url:mongoUrl})}));
 
   app.use(express.urlencoded());
   app.use(express.multipart({hash:'sha1'}));
