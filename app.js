@@ -25,13 +25,18 @@ module.exports = function(cfg) {
 
   var mongoUrl = cfg.mongodb.url || 'mongodb://localhost/default';
 
-  mongodb.MongoClient.connect(mongoUrl,function(err,connectedDb){
-    if(err) throw err;
-    else db = connectedDb;
-  });
-
   var mailer = nodemailer.createTransport("SMTP", cfg.smtp);
   var s3client = knox.createClient(cfg.s3);
+
+  mongodb.MongoClient.connect(mongoUrl,function(err,connectedDb){
+    if (err) throw err;
+    else db = connectedDb;
+
+    // Sub-app routes
+    app.use('/api/v0',require('./routes/api.js')(db));
+    app.use(require('./routes/userRoutes.js')(db,mailer));
+    app.use(require('./routes/plugRoutes.js')(db,s3client));
+  });
 
   var app = express();
 
@@ -57,11 +62,6 @@ module.exports = function(cfg) {
   app.get('/about', function(req,res){
       res.render('about.jade');
   });
-
-  // Sub-app routes
-  app.use('/api/v0',require('./routes/api.js')(db));
-  app.use(require('./routes/userRoutes.js')(db,mailer));
-  app.use(require('./routes/plugRoutes.js')(db,s3client));
 
   return app;
 };
