@@ -14,20 +14,21 @@
   "author": "Stuart P. Bentley",
   "license": "MIT",
   "engines": {
-    "node": "0.10.x"
+    "node": "7.x"
   },
   "dependencies": {
-    "bcrypt": "~0.7.5",
-    "connect-mongo": "~0.3.2",
+    "bcrypt": "^0.7.8",
+    "connect-mongo": "^0.3.3",
     "envigor": "^0.9.0",
-    "express": "~3.2.2",
+    "express": "^3.2.6",
+    "grunt": "^0.4.5",
     "jade": "^1.9.2",
-    "knox": "~0.8.0",
-    "mongodb": "~1.3.0",
-    "nodemailer": "~0.4.4",
-    "passport": "~0.1.17",
-    "passport-facebook": "~0.1.5",
-    "queue-async": "~1.0.3"
+    "knox": "^0.8.10",
+    "mongodb": "^1.3.23",
+    "nodemailer": "^0.4.4",
+    "passport": "^0.1.18",
+    "passport-facebook": "^0.1.6",
+    "queue-async": "^1.0.7"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
