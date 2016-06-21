@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
-    "connect-mongo": "^0.3.3",
+    "connect-mongo": "^1.2.1",
     "envigor": "^0.9.0",
     "express": "^3.21.2",
     "grunt": "^0.4.5",
