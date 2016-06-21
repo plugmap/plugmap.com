@@ -1,15 +1,13 @@
 extends layout
 
 append styles
-  link(href='//d591zijq8zntj.cloudfront.net/leaflet-0.5.1/leaflet.css',rel='stylesheet')
-  //if lte IE 8
-    link(href='//d591zijq8zntj.cloudfront.net/leaflet-0.5.1/leaflet.ie.css',rel='stylesheet')
+  link(href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css',rel='stylesheet')
   link(href='/MarkerCluster.css',rel='stylesheet')
   link(href='/styles/map.css',rel='stylesheet')
   link(href='/styles/icons.css',rel='stylesheet')
 
 append scripts
-  script(src='//d591zijq8zntj.cloudfront.net/leaflet-0.5.1/leaflet.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js')
   script(src='/leaflet.markercluster.js')
   script(src='/leaflet.restoreview.js')
 
