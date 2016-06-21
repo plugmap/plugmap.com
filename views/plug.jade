@@ -19,7 +19,7 @@ block content
           = plug.owner.username
           img(src='//gravatar.com/avatar/'+plug.owner.emailMD5).owneravatar
 
-  userUpvolted = currentUser && ~plug.upvolters.indexOf(currentUser._id)
+  - var userUpvolted = currentUser && ~plug.upvolters.indexOf(currentUser._id)
 
   #upvolt-button(class = (userUpvolted ? 'upvolted' : ''))
     span.icon-upvolt
