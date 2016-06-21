@@ -1,4 +1,4 @@
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var impossibleHash =
   '$2a$10$00000000000000000000000000000000000000000000000000000';
 var express = require('express');
